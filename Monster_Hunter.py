@@ -1,5 +1,6 @@
 import random
 import sys
+import combatsystem as cs
 
 
 class Player:
@@ -10,11 +11,19 @@ class Player:
         and another which displays the content of the inventory
     """
 
-    def __init__(self, player_name, player_position, player_found_monster):
+    def __init__(self, player_name, player_position, player_hp, player_damage, player_defence):
         self.player_name = player_name
         self.player_position = player_position
-        self.player_found_monster = player_found_monster
+        self.player_hp = player_hp
+        self.player_damage = player_damage
+        self.player_defence = player_defence
+
         self.inventory = []
+        self.equipped_items = {"Helmet": None,
+                               "Chest": None,
+                               "Weapon": None,
+                               "Shield": None
+                               }
 
     def add_item(self, item):
         self.inventory.append(item)
@@ -26,11 +35,15 @@ class Player:
 class Monster:
     # The monster class defines a name, position and whether the monster is currently hidden on the board
 
-    def __init__(self, monster_name, monster_position, monster_hidden, monster_found):
+    def __init__(self, monster_name, monster_position, monster_hidden, monster_found, monster_hp, monster_attack,
+                 monster_defence):
         self.monster_name = monster_name
         self.monster_position = monster_position
         self.monster_hidden = monster_hidden
         self.monster_found = monster_found
+        self.monster_hp = monster_hp
+        self.monster_attack = monster_attack
+        self.monster_defence = monster_defence
 
 
 class Item:
@@ -39,11 +52,13 @@ class Item:
     def __repr__(self):
         return self.item_name
 
-    def __init__(self, item_name, item_type, item_hidden, item_position):
+    def __init__(self, item_name, item_type, item_hidden, item_position, item_attack, item_defence):
         self.item_name = item_name
         self.item_type = item_type
         self.item_hidden = item_hidden
         self.item_position = item_position
+        self.item_attack = item_attack
+        self.item_defence = item_defence
 
 
 def draw_board(board):
@@ -103,7 +118,7 @@ def gameAction():
     }
     valid_move = False
     while not valid_move:
-        game_action = input("> ")
+        game_action = input("\n> ")
         if game_action in game_action_dict:
             # Try calling a function, if the action is not a function, catch the exception and pass it to makeMove()
             try:
@@ -127,19 +142,23 @@ def checkEncounters():
             print(f"{a_sword.item_name} was added to your inventory.")
 
     if player.player_position == monster.monster_position:
-        if a_sword in player.inventory:
-            print(f"You used the {a_sword.item_name} to defeat the monster. You win!")
-            sys.exit()
+        print("\nYou found the monster!")
+        monster.monster_found = True
+
+        fight_flee = input("\nDo you want to fight? [y/n] > ")
+        if fight_flee == "y":
+            theBoard[monster.monster_position] = monster.monster_name
+            cs.battle(monster)
+
+        elif fight_flee == "n":
+            pass
+
         else:
-            print("You found the monster! Find a sword to defeat the monster!")
-            monster.monster_found = True
-            print(monster.monster_found)
+            print("You're so scared that you run away.")
 
     if monster.monster_found:
-        print("monster.monster_position = true now")
         theBoard[monster.monster_position] = monster.monster_name
-    else:
-        print("monster.monster_position = false now")
+
 
 
 def makeMove(move):
@@ -227,20 +246,17 @@ theBoard = [
 ]
 
 # Create a player and place on position 0
-player = Player("P", 0, False)
+player = Player("P", 0, 100, 3, 5)
 theBoard[player.player_position] = player.player_name
 
 # Create the monster and place in a random position
-random_monster_position = random.randrange(1, 99)
-monster = Monster("M", random_monster_position, " ", False)
+random_monster_position = random.randrange(1, 2)
+monster = Monster("M", random_monster_position, " ", False, 100, 2, 1)
 theBoard[monster.monster_position] = monster.monster_hidden
 
-# Create an item and place it in a random position
-random_item_position = random.randrange(1, 99)
-# If the position of the item is the same as that of the monster, pick a new position for the item
-while random_item_position == random_monster_position:
-    random_item_position = random.randrange(1, 9)
-a_sword = Item("Monster Slayer Sword", "Sword", " ", random_item_position)
+# Create an item a sword and place it in player inventory
+a_sword = Item("Monster Slayer Sword", "Sword", " ", None, 5, 0)
+player.equipped_items["Weapon"] = a_sword
 
 if __name__ == '__main__':
     main()
