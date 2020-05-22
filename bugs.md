@@ -9,3 +9,5 @@
 4. If a monster is defeated, the monster name is still displayed on the board
 
 5. If a monster id defeated, the player can walk into the monster cell again and choose to fight, but monster is defeated so fight end immediately.
+
+6. Player can't be defeated, when players hp goes to or below 0, "Monster had been defeated". Player is free to carry on playing.
