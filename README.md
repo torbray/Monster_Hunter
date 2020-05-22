@@ -35,7 +35,7 @@ The help command calls the printHelp() function and its only purpose is to print
           "left         Move left\n"
           "right        Move right\n")
 
-Future objectives:
+# Future objectives:
 (This list is not in order of any importance)
 
 1. Enhance the item class to provide items with statistics such as attack, defence etc.
