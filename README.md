@@ -44,7 +44,7 @@ The help command calls the printHelp() function and its only purpose is to print
 
 4. Create more monsters on the board.
 5. Allow the player to start with simple equipment.
-6. Create a fighting function, which will allow the player to battle monster in a more dynamic way. For example dice rolling.
+6. Create a combat system, which will allow the player to battle monster in a more dynamic way. For example dice rolling.
 7. Create more items.
 8. Create monster loot.
 9. Create NPCs with different functionalities, for example upgrading items.
