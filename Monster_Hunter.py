@@ -26,10 +26,11 @@ class Player:
 class Monster:
     # The monster class defines a name, position and whether the monster is currently hidden on the board
 
-    def __init__(self, monster_name, monster_position, monster_hidden):
+    def __init__(self, monster_name, monster_position, monster_hidden, monster_found):
         self.monster_name = monster_name
         self.monster_position = monster_position
         self.monster_hidden = monster_hidden
+        self.monster_found = monster_found
 
 
 class Item:
@@ -52,31 +53,38 @@ def draw_board(board):
     monster from hidden to monster_name.
     """
 
-    if player.player_found_monster:
-        theBoard[monster.monster_position] = monster.monster_name
-
     print('----------------------------------------')
     print('----------------------------------------')
     print('----------------------------------------')
-    print(f' {board[90]} | {board[91]} | {board[92]} | {board[93]} | {board[94]} | {board[95]} | {board[96]} | {board[97]} | {board[98]} | {board[99]} |')
+    print(
+        f' {board[90]} | {board[91]} | {board[92]} | {board[93]} | {board[94]} | {board[95]} | {board[96]} | {board[97]} | {board[98]} | {board[99]} |')
     print('----------------------------------------')
-    print(f' {board[80]} | {board[81]} | {board[82]} | {board[83]} | {board[84]} | {board[85]} | {board[86]} | {board[87]} | {board[88]} | {board[89]} |')
+    print(
+        f' {board[80]} | {board[81]} | {board[82]} | {board[83]} | {board[84]} | {board[85]} | {board[86]} | {board[87]} | {board[88]} | {board[89]} |')
     print('----------------------------------------')
-    print(f' {board[70]} | {board[71]} | {board[72]} | {board[73]} | {board[74]} | {board[75]} | {board[76]} | {board[77]} | {board[78]} | {board[79]} |')
+    print(
+        f' {board[70]} | {board[71]} | {board[72]} | {board[73]} | {board[74]} | {board[75]} | {board[76]} | {board[77]} | {board[78]} | {board[79]} |')
     print('----------------------------------------')
-    print(f' {board[60]} | {board[61]} | {board[62]} | {board[63]} | {board[64]} | {board[65]} | {board[66]} | {board[67]} | {board[68]} | {board[69]} |')
+    print(
+        f' {board[60]} | {board[61]} | {board[62]} | {board[63]} | {board[64]} | {board[65]} | {board[66]} | {board[67]} | {board[68]} | {board[69]} |')
     print('----------------------------------------')
-    print(f' {board[50]} | {board[51]} | {board[52]} | {board[53]} | {board[54]} | {board[55]} | {board[56]} | {board[57]} | {board[58]} | {board[59]} |')
+    print(
+        f' {board[50]} | {board[51]} | {board[52]} | {board[53]} | {board[54]} | {board[55]} | {board[56]} | {board[57]} | {board[58]} | {board[59]} |')
     print('----------------------------------------')
-    print(f' {board[40]} | {board[41]} | {board[42]} | {board[43]} | {board[44]} | {board[45]} | {board[46]} | {board[47]} | {board[48]} | {board[49]} |')
+    print(
+        f' {board[40]} | {board[41]} | {board[42]} | {board[43]} | {board[44]} | {board[45]} | {board[46]} | {board[47]} | {board[48]} | {board[49]} |')
     print('----------------------------------------')
-    print(f' {board[30]} | {board[31]} | {board[32]} | {board[33]} | {board[34]} | {board[35]} | {board[36]} | {board[37]} | {board[38]} | {board[39]} |')
+    print(
+        f' {board[30]} | {board[31]} | {board[32]} | {board[33]} | {board[34]} | {board[35]} | {board[36]} | {board[37]} | {board[38]} | {board[39]} |')
     print('----------------------------------------')
-    print(f' {board[20]} | {board[21]} | {board[22]} | {board[23]} | {board[24]} | {board[25]} | {board[26]} | {board[27]} | {board[28]} | {board[29]} |')
+    print(
+        f' {board[20]} | {board[21]} | {board[22]} | {board[23]} | {board[24]} | {board[25]} | {board[26]} | {board[27]} | {board[28]} | {board[29]} |')
     print('----------------------------------------')
-    print(f' {board[10]} | {board[11]} | {board[12]} | {board[13]} | {board[14]} | {board[15]} | {board[16]} | {board[17]} | {board[18]} | {board[19]} |')
+    print(
+        f' {board[10]} | {board[11]} | {board[12]} | {board[13]} | {board[14]} | {board[15]} | {board[16]} | {board[17]} | {board[18]} | {board[19]} |')
     print('----------------------------------------')
-    print(f' {board[0]} | {board[1]} | {board[2]} | {board[3]} | {board[4]} | {board[5]} | {board[6]} | {board[7]} | {board[8]} | {board[9]} |')
+    print(
+        f' {board[0]} | {board[1]} | {board[2]} | {board[3]} | {board[4]} | {board[5]} | {board[6]} | {board[7]} | {board[8]} | {board[9]} |')
     print('----------------------------------------')
     print('----------------------------------------')
     print('----------------------------------------')
@@ -107,6 +115,33 @@ def gameAction():
             print("Unknown command...")
 
 
+def checkEncounters():
+    # This function checks for any encounters on the board between the player/monster/item.
+
+    if player.player_position == a_sword.item_position:
+        if a_sword in player.inventory:
+            pass
+        else:
+            print(f"You found a {a_sword.item_type}!")
+            player.add_item(a_sword)
+            print(f"{a_sword.item_name} was added to your inventory.")
+
+    if player.player_position == monster.monster_position:
+        if a_sword in player.inventory:
+            print(f"You used the {a_sword.item_name} to defeat the monster. You win!")
+            sys.exit()
+        else:
+            print("You found the monster! Find a sword to defeat the monster!")
+            monster.monster_found = True
+            print(monster.monster_found)
+
+    if monster.monster_found:
+        print("monster.monster_position = true now")
+        theBoard[monster.monster_position] = monster.monster_name
+    else:
+        print("monster.monster_position = false now")
+
+
 def makeMove(move):
     """
     This function defines movement on the board. When a player makes a move, it first moves the player to the new
@@ -126,23 +161,7 @@ def makeMove(move):
     # Update player position to the new position
     player.player_position = player.player_position + move
 
-    if player.player_position == a_sword.item_position:
-        if a_sword in player.inventory:
-            pass
-        else:
-            print(f"You found a {a_sword.item_type}!")
-            player.add_item(a_sword)
-            print(f"{a_sword.item_name} was added to your inventory.")
-
-    if player.player_position == monster.monster_position:
-        player.player_found_monster = True
-        if a_sword in player.inventory:
-            print(f"You used the {a_sword.item_name} to defeat the monster. You win!")
-            sys.exit()
-        else:
-            print("You found the monster! Find a sword to defeat the monster!")
-            theBoard[monster.monster_position] = monster.monster_name
-
+    checkEncounters()
     draw_board(theBoard)
     gameAction()
 
@@ -213,7 +232,7 @@ theBoard[player.player_position] = player.player_name
 
 # Create the monster and place in a random position
 random_monster_position = random.randrange(1, 99)
-monster = Monster("M", random_monster_position, " ")
+monster = Monster("M", random_monster_position, " ", False)
 theBoard[monster.monster_position] = monster.monster_hidden
 
 # Create an item and place it in a random position
