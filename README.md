@@ -7,7 +7,7 @@ To start the game simply open your favourite command terminal and navigate to th
 
     python Monster_Hunnter.py
     
-We start in the main menu of the game, which welcomes the player and defines the objective. It also displayes available commands for the main menu.
+We start in the main menu of the game, which welcomes the player and defines the objective. It also displays available commands for the main menu.
 
     Available Commands:
 
