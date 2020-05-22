@@ -26,7 +26,7 @@ class Player:
 class Monster:
     # The monster class defines a name, position and whether the monster is currently hidden on the board
 
-    def __init__(self, monster_name, monster_position, monster_hidden, monster_def, monster_attack):
+    def __init__(self, monster_name, monster_position, monster_hidden):
         self.monster_name = monster_name
         self.monster_position = monster_position
         self.monster_hidden = monster_hidden
