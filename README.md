@@ -1,5 +1,5 @@
 # Monster_Hunter
-Text-based RPG played within the command terminal.
+Text-based RPG played within the command terminal. (See Development branch for most up-to-date version of the game.)
 
 This is a single-player text-based RPG, which purpose is to practice classes and simple game mechanics.
 
