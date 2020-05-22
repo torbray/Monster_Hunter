@@ -1,5 +1,5 @@
 # Monster_Hunter - Development branch (most up to date)
-To start the game you will need both Monster_Hunter.py and combatsystem.py in the same directory. Then simply open your favourite command terminal and navigate to the directory of the Monster_Hunter.py. Once in the correct directory use:
+To start the game **_you will need both Monster_Hunter.py and combatsystem.py in the same directory._** Then simply open your favourite command terminal and navigate to the directory of the Monster_Hunter.py. Once in the correct directory use:
 
     python Monster_Hunnter.py
           
