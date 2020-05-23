@@ -19,7 +19,7 @@ We start in the main menu of the game, which welcomes the player and defines the
 
     What would you like to do? >
     
-Help menu:
+# Help menu:
 
 The help command calls the printHelp() function and its only purpose is to print available menu commands, game commands and             player movement.
 
@@ -28,7 +28,7 @@ The help command calls the printHelp() function and its only purpose is to print
           "start        Start the game"
           "exit         Exit the game"
           
-    "Available Game Commands:"
+    Available Game Commands:"
           "help         Display help menu"
           "exit         Exit the game"
           "inventory    Check your inventory"
@@ -37,3 +37,32 @@ The help command calls the printHelp() function and its only purpose is to print
           "left         Move left"
           "right        Move right"
 
+# The board:
+
+The player and the monster are displayed on a 10x10 grid board.
+
+`----------------------------------------
+----------------------------------------
+----------------------------------------
+   |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+   |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+   |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+   |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+   |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+   |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+   |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+   |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+   |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+ P |   |   |   |   |   |   |   |   |   |
+----------------------------------------
+----------------------------------------
+----------------------------------------`
