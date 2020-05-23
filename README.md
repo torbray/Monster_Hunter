@@ -1,5 +1,5 @@
 # Monster_Hunter
-(See Development branch for most up-to-date version of the game. Includes early combat system, character stats, item stats...)
+__(See Development branch for most up-to-date version of the game. Includes early combat system, character stats, item stats...)__
 
 Text-based RPG played within the command terminal. 
 
