@@ -18,7 +18,7 @@ class Player:
         self.strength = strength
         self.defence = defence
 
-        self.inventory = []
+        self.inventory = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
         self.equipped_items = {"Helmet": None,
                                "Chest": None,
                                "Weapon": None,
@@ -29,21 +29,42 @@ class Player:
         self.inventory.append(item)
 
     def show_inventory(self):
-        print(self.inventory)
+        print("--Small Leather Bag--")
+        print("---------------------")
+        print(
+            f"| {self.inventory[0]} | {self.inventory[1]} | {self.inventory[2]} | {self.inventory[3]} | {self.inventory[4]} |")
+        print("---------------------")
+        print(
+            f"| {self.inventory[5]} | {self.inventory[6]} | {self.inventory[7]} | {self.inventory[8]} | {self.inventory[9]} |")
+        print("---------------------")
+        print("------Equipped-------")
+        print("---------------------")
+        print("       Helmet        \n")
+        print(f"       {self.equipped_items['Helmet']}")
+        print("---------------------")
+        print("       Armour        \n")
+        print(f"       {self.equipped_items['Chest']}")
+        print("---------------------")
+        print("       Weapon        \n")
+        print(f"       {self.equipped_items['Weapon']}")
+        print("---------------------")
+        print("       Shield        \n")
+        print(f"       {self.equipped_items['Shield']}")
+        print("---------------------")
 
 
 class Monster:
     # The monster class defines a name, position and whether the monster is currently hidden on the board
 
-    def __init__(self, name, position, hidden, found, hp, attack,
-                 monster_defence):
+    def __init__(self, name, position, hidden, found, hp, attack, defence, defeated):
         self.name = name
         self.position = position
         self.hidden = hidden
         self.found = found
         self.hp = hp
         self.attack = attack
-        self.defence = monster_defence
+        self.defence = defence
+        self.defeated = defeated
 
 
 class Item:
@@ -52,13 +73,73 @@ class Item:
     def __repr__(self):
         return self.name
 
-    def __init__(self, name, type, hidden, position, attack, defence):
+    def __init__(self, name, i_type, hidden, position, attack, defence):
         self.name = name
-        self.type = type
+        self.i_type = i_type
         self.hidden = hidden
         self.position = position
         self.attack = attack
         self.defence = defence
+
+
+def startGame():
+    draw_board(theBoard)
+    gameAction()
+
+
+def printHelp():
+    print("\nAvailable Menu Commands:\n"
+          "help         Display help menu\n"
+          "start        Start the game\n"
+          "exit         Exit the game\n\n"
+          "\nAvailable Game Commands:\n"
+          "help         Display help menu\n"
+          "exit         Exit the game\n"
+          "inventory    Check your inventory\n\n"
+          "up           Move up\n"
+          "down         Move down\n"
+          "left         Move left\n"
+          "right        Move right\n")
+
+
+def menuAction():
+    """
+    Hold a dictionary with available commands in the menu of the game
+    """
+    menu_action_dict = {
+        "help": printHelp, "start": startGame, "exit": sys.exit
+    }
+    while True:
+        menu_action = input("What would you like to do? > ")
+        if menu_action in menu_action_dict:
+            menu_action_dict[menu_action]()
+        else:
+            print("Unknown command...")
+
+
+def gameAction():
+    """
+    This function holds a game action dictionary, which maps valid user inputs to either other functions
+    or converts player movement to equivalent integers. For example: If the player wants to move up the board,
+    it has to add 10 to the current position of the player, if the player wants to move left it has to minus 1
+    from the current position.
+    """
+    game_action_dict = {
+        "help": printHelp, "exit": sys.exit, "inventory": player.show_inventory,
+        "up": 10, "down": -10, "left": -1, "right": 1
+    }
+    valid_move = False
+    while not valid_move:
+        game_action = input("\n> ")
+        if game_action in game_action_dict:
+            # Try calling a function, if the action is not a function, catch the exception and pass it to makeMove()
+            try:
+                game_action_dict[game_action]()
+            except TypeError:
+                makeMove(game_action_dict[game_action])
+                valid_move = True
+        else:
+            print("Unknown command...")
 
 
 def draw_board(board):
@@ -105,61 +186,6 @@ def draw_board(board):
     print('----------------------------------------')
 
 
-def gameAction():
-    """
-    This function holds a game action dictionary, which maps valid user inputs to either other functions
-    or converts player movement to equivalent integers. For example: If the player wants to move up the board,
-    it has to add 10 to the current position of the player, if the player wants to move left it has to minus 1
-    from the current position.
-    """
-    game_action_dict = {
-        "help": printHelp, "exit": sys.exit, "inventory": player.show_inventory,
-        "up": 10, "down": -10, "left": -1, "right": 1
-    }
-    valid_move = False
-    while not valid_move:
-        game_action = input("\n> ")
-        if game_action in game_action_dict:
-            # Try calling a function, if the action is not a function, catch the exception and pass it to makeMove()
-            try:
-                game_action_dict[game_action]()
-            except TypeError:
-                makeMove(game_action_dict[game_action])
-                valid_move = True
-        else:
-            print("Unknown command...")
-
-
-def checkEncounters():
-    # This function checks for any encounters on the board between the player/monster/item.
-
-    if player.position == a_sword.position:
-        if a_sword in player.inventory:
-            pass
-        else:
-            print(f"You found a {a_sword.type}!")
-            player.add_item(a_sword)
-            print(f"{a_sword.name} was added to your inventory.")
-
-    if player.position == monster.position:
-        print("\nYou found the monster!")
-        monster.found = True
-
-        fight_flee = input("\nDo you want to fight? [y/n] > ")
-        if fight_flee == "y":
-            theBoard[monster.position] = monster.name
-            cs.battle(monster)
-
-        elif fight_flee == "n":
-            pass
-
-        else:
-            print("You're so scared that you run away.")
-
-    if monster.found:
-        theBoard[monster.position] = monster.name
-
-
 def makeMove(move):
     """
     This function defines movement on the board. When a player makes a move, it first moves the player to the new
@@ -184,39 +210,45 @@ def makeMove(move):
     gameAction()
 
 
-def printHelp():
-    print("\nAvailable Menu Commands:\n"
-          "help         Display help menu\n"
-          "start        Start the game\n"
-          "exit         Exit the game\n\n"
-          "\nAvailable Game Commands:\n"
-          "help         Display help menu\n"
-          "exit         Exit the game\n"
-          "inventory    Check your inventory\n\n"
-          "up           Move up\n"
-          "down         Move down\n"
-          "left         Move left\n"
-          "right        Move right\n")
+def checkEncounters():
+    # This function checks for any encounters on the board between the player/monster/item.
 
-
-def startGame():
-    draw_board(theBoard)
-    gameAction()
-
-
-def menuAction():
-    """
-    Hold a dictionary with available commands in the menu of the game
-    """
-    menu_action_dict = {
-        "help": printHelp, "start": startGame, "exit": sys.exit
-    }
-    while True:
-        menu_action = input("What would you like to do? > ")
-        if menu_action in menu_action_dict:
-            menu_action_dict[menu_action]()
+    if player.position == a_sword.position:
+        if a_sword in player.inventory:
+            pass
         else:
-            print("Unknown command...")
+            print(f"You found a {a_sword.i_type}!")
+            player.add_item(a_sword)
+            print(f"{a_sword.name} was added to your inventory.")
+
+    for orc in army_of_orcs:
+        if orc.defeated:
+            pass
+        else:
+
+            if orc.position == player.position:
+                print("\nYou found the monster!")
+                orc.found = True
+
+                fight_flee = input("\nDo you want to fight? [y/n] > ")
+                if fight_flee == "y":
+                    theBoard[orc.position] = orc.name
+                    cs.battle(orc)
+
+                elif fight_flee == "n":
+                    pass
+
+                else:
+                    print("You're so scared that you run away.")
+
+    for orc in army_of_orcs:
+        if orc.found:
+            theBoard[orc.position] = orc.name
+        if orc.defeated:
+            if player.position == orc.position:
+                theBoard[orc.position] = player.name
+            else:
+                theBoard[orc.position] = " "
 
 
 def main():
@@ -248,13 +280,22 @@ theBoard = [
 player = Player("P", 0, 100, 3, 5)
 theBoard[player.position] = player.name
 
-# Create the monster and place in a random position
-random_monster_position = random.randrange(1, 2)
-monster = Monster("M", random_monster_position, " ", False, 100, 2, 1)
-theBoard[monster.position] = monster.hidden
+
+# Create monsters and place in a random position
+
+
+def gen_ran_pos():
+    random_monster_position = random.randrange(1, 99)
+    return random_monster_position
+
+
+army_of_orcs = [Monster("m", gen_ran_pos(), " ", False, 100, 2, 1, False) for _ in range(10)]
+
+for i in army_of_orcs:
+    theBoard[gen_ran_pos()] = i.hidden
 
 # Create an item a sword and place it in player inventory
-a_sword = Item("Monster Slayer Sword", "Sword", " ", None, 5, 0)
+a_sword = Item("Wooden stick", "Sword", " ", None, 5, 0)
 player.equipped_items["Weapon"] = a_sword
 
 if __name__ == '__main__':
