@@ -53,26 +53,31 @@ def battle(monster):
     """
     fight = True
     while fight:
-        while monster.hp > 0 and mh.player.hp > 0:
-
-            action = input("\nroll/flee? > ")
-            if action == "roll":
-                print("\nIt's your turn to roll the dice... \n")
-                # time.sleep(2)
-                player_hit = attack()
-                deal_dmg(monster, player_hit)
-                monster_attack(monster)
-
-            elif action == "flee":
-                print("You run away like a coward!")
-                fight = False
-                mh.gameAction()
-
-            elif action == "exit":
+        while monster.hp > 0:
+            if mh.player.hp <= 0:
+                print("You're dead, game over.")
                 sys.exit()
-
             else:
-                print("Unknown command...")
 
+                action = input("\nroll/flee? > ")
+                if action == "roll":
+                    print("\nIt's your turn to roll the dice... \n")
+                    # time.sleep(2)
+                    player_hit = attack()
+                    deal_dmg(monster, player_hit)
+                    monster_attack(monster)
+
+                elif action == "flee":
+                    print("You run away like a coward!")
+                    fight = False
+                    mh.gameAction()
+
+                elif action == "exit":
+                    sys.exit()
+
+                else:
+                    print("Unknown command...")
+
+        monster.defeated = True
         print("Monster defeated.")
         fight = False
