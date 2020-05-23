@@ -39,7 +39,8 @@ The help command calls the printHelp() function and its only purpose is to print
 
 # The board:
 
-The player and the monster are displayed on a 10x10 grid board.
+The player and the monster are displayed on a 10x10 grid board. Until the player encounters the monster, it remains invisible on the board.
+
 P - Player
 M - Monster
 
