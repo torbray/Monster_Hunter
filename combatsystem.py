@@ -21,14 +21,14 @@ def attack():
     print(f"You rolled {player_roll} \n")
     # time.sleep(2)
 
-    player_hit = mh.player.player_strength * mh.player.equipped_items["Weapon"].item_attack * dice_dict[player_roll]
+    player_hit = mh.player.strength * mh.player.equipped_items["Weapon"].attack * dice_dict[player_roll]
     return player_hit
 
 
 def deal_dmg(some_monster, player_hit):
     # The only purpose of this function is to deal damage to some_monster and to print the result.
-    some_monster.monster_hp = some_monster.monster_hp - player_hit
-    print(f"You hit {some_monster.monster_name} for {player_hit} damage... {some_monster.monster_hp}hp remaining \n")
+    some_monster.hp -= player_hit
+    print(f"You hit {some_monster.name} for {player_hit} damage... {some_monster.hp}hp remaining \n")
     # time.sleep(4)
 
 
@@ -40,9 +40,9 @@ def monster_attack(monster):
     print(f"The monster rolled {monster_roll} \n")
     # time.sleep(2)
 
-    monster_hit = monster.monster_attack * dice_dict[monster_roll]
-    mh.player.player_hp = mh.player.player_hp - monster_hit
-    print(f"You get hit for {monster_hit} damage... {mh.player.player_hp}hp remaining\n")
+    monster_hit = monster.attack * dice_dict[monster_roll]
+    mh.player.hp = mh.player.hp - monster_hit
+    print(f"You get hit for {monster_hit} damage... {mh.player.hp}hp remaining\n")
     # time.sleep(4)
 
 
@@ -53,7 +53,7 @@ def battle(monster):
     """
     fight = True
     while fight:
-        while monster.monster_hp > 0 and mh.player.player_hp > 0:
+        while monster.hp > 0 and mh.player.hp > 0:
 
             action = input("\nroll/flee? > ")
             if action == "roll":
