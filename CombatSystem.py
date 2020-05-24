@@ -1,5 +1,6 @@
 import random
 import Monster_Hunter as mh
+import PlayerClass as pc
 import time
 import sys
 
@@ -21,7 +22,7 @@ def attack():
     print(f"You rolled {player_roll} \n")
     # time.sleep(2)
 
-    player_hit = mh.player.strength * mh.player.equipped_items["Weapon"].attack * dice_dict[player_roll]
+    player_hit = pc.char.strength * pc.char.equipped_items["Weapon"].attack * dice_dict[player_roll]
     return player_hit
 
 
@@ -41,8 +42,8 @@ def monster_attack(monster):
     # time.sleep(2)
 
     monster_hit = monster.attack * dice_dict[monster_roll]
-    mh.player.hp = mh.player.hp - monster_hit
-    print(f"You get hit for {monster_hit} damage... {mh.player.hp}hp remaining\n")
+    pc.char.hp = pc.char.hp - monster_hit
+    print(f"You get hit for {monster_hit} damage... {pc.char.hp}hp remaining\n")
     # time.sleep(4)
 
 
@@ -54,7 +55,7 @@ def battle(monster):
     fight = True
     while fight:
         while monster.hp > 0:
-            if mh.player.hp <= 0:
+            if pc.char.hp <= 0:
                 print("You're dead, game over.")
                 sys.exit()
             else:
