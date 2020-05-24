@@ -16,5 +16,5 @@ Monster_Hunter Dev Change v1.1
 
 * Created a separate file for the game board
 * Ported game board changes
-
+* Moved some code to the main() function
 
