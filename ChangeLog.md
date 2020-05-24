@@ -11,3 +11,10 @@ Monster_Hunter Dev Change v1.0
 * Ported Monster class changes
 * Created a separate file for the Item class
 * Ported Item class changes
+
+Monster_Hunter Dev Change v1.1
+
+* Created a separate file for the game board
+* Ported game board changes
+
+
