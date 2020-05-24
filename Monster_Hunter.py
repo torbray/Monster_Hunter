@@ -1,6 +1,9 @@
+# Monster_Hunter Development Version 1.1
+
 import sys
 
 # Game imports
+import GameBoard
 import CombatSystem
 import PlayerClass
 import MonsterClass
@@ -8,7 +11,7 @@ import ItemClass
 
 
 def startGame():
-    draw_board(theBoard)
+    GameBoard.draw_board(GameBoard.theBoard)
     gameAction()
 
 
@@ -20,6 +23,7 @@ def printHelp():
           "\nAvailable Game Commands:\n"
           "help         Display help menu\n"
           "exit         Exit the game\n"
+          "stats        View stats of an item\n"   
           "inventory    Check your inventory\n\n"
           "up           Move up\n"
           "down         Move down\n"
@@ -50,7 +54,7 @@ def gameAction():
     from the current position.
     """
     game_action_dict = {
-        "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory,
+        "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory, "stats": ItemClass.showStats,
         "up": 10, "down": -10, "left": -1, "right": 1
     }
     valid_move = False
@@ -67,50 +71,6 @@ def gameAction():
             print("Unknown command...")
 
 
-def draw_board(board):
-    """
-    This function takes board as a parameter, which is a list of empty strings -> ' '. It holds 99 indices.
-    This function also checks whether the player encountered a monster and if he did, it changes the position of the
-    monster from hidden to monster_name.
-    """
-
-    print('----------------------------------------')
-    print('----------------------------------------')
-    print('----------------------------------------')
-    print(
-        f' {board[90]} | {board[91]} | {board[92]} | {board[93]} | {board[94]} | {board[95]} | {board[96]} | {board[97]} | {board[98]} | {board[99]} |')
-    print('----------------------------------------')
-    print(
-        f' {board[80]} | {board[81]} | {board[82]} | {board[83]} | {board[84]} | {board[85]} | {board[86]} | {board[87]} | {board[88]} | {board[89]} |')
-    print('----------------------------------------')
-    print(
-        f' {board[70]} | {board[71]} | {board[72]} | {board[73]} | {board[74]} | {board[75]} | {board[76]} | {board[77]} | {board[78]} | {board[79]} |')
-    print('----------------------------------------')
-    print(
-        f' {board[60]} | {board[61]} | {board[62]} | {board[63]} | {board[64]} | {board[65]} | {board[66]} | {board[67]} | {board[68]} | {board[69]} |')
-    print('----------------------------------------')
-    print(
-        f' {board[50]} | {board[51]} | {board[52]} | {board[53]} | {board[54]} | {board[55]} | {board[56]} | {board[57]} | {board[58]} | {board[59]} |')
-    print('----------------------------------------')
-    print(
-        f' {board[40]} | {board[41]} | {board[42]} | {board[43]} | {board[44]} | {board[45]} | {board[46]} | {board[47]} | {board[48]} | {board[49]} |')
-    print('----------------------------------------')
-    print(
-        f' {board[30]} | {board[31]} | {board[32]} | {board[33]} | {board[34]} | {board[35]} | {board[36]} | {board[37]} | {board[38]} | {board[39]} |')
-    print('----------------------------------------')
-    print(
-        f' {board[20]} | {board[21]} | {board[22]} | {board[23]} | {board[24]} | {board[25]} | {board[26]} | {board[27]} | {board[28]} | {board[29]} |')
-    print('----------------------------------------')
-    print(
-        f' {board[10]} | {board[11]} | {board[12]} | {board[13]} | {board[14]} | {board[15]} | {board[16]} | {board[17]} | {board[18]} | {board[19]} |')
-    print('----------------------------------------')
-    print(
-        f' {board[0]} | {board[1]} | {board[2]} | {board[3]} | {board[4]} | {board[5]} | {board[6]} | {board[7]} | {board[8]} | {board[9]} |')
-    print('----------------------------------------')
-    print('----------------------------------------')
-    print('----------------------------------------')
-
-
 def makeMove(move):
     """
     This function defines movement on the board. When a player makes a move, it first moves the player to the new
@@ -122,16 +82,16 @@ def makeMove(move):
     """
 
     # Place the player in a new position
-    theBoard[PlayerClass.char.position + move] = PlayerClass.char.name
+    GameBoard.theBoard[PlayerClass.char.position + move] = PlayerClass.char.name
 
     # Reset the current position to empty
-    theBoard[PlayerClass.char.position] = " "
+    GameBoard.theBoard[PlayerClass.char.position] = " "
 
     # Update player position to the new position
     PlayerClass.char.position = PlayerClass.char.position + move
 
     checkEncounters()
-    draw_board(theBoard)
+    GameBoard.draw_board(GameBoard.theBoard)
     gameAction()
 
 
@@ -157,7 +117,7 @@ def checkEncounters():
 
                 fight_flee = input("\nDo you want to fight? [y/n] > ")
                 if fight_flee == "y":
-                    theBoard[orc.position] = orc.name
+                    GameBoard.theBoard[orc.position] = orc.name
                     CombatSystem.battle(orc)
 
                 elif fight_flee == "n":
@@ -168,15 +128,26 @@ def checkEncounters():
 
     for orc in MonsterClass.army_of_orcs:
         if orc.found:
-            theBoard[orc.position] = orc.name
+            GameBoard.theBoard[orc.position] = orc.name
         if orc.defeated:
             if PlayerClass.char.position == orc.position:
-                theBoard[orc.position] = PlayerClass.char.name
+                GameBoard.theBoard[orc.position] = PlayerClass.char.name
             else:
-                theBoard[orc.position] = " "
+                GameBoard.theBoard[orc.position] = " "
 
 
 def main():
+    # Place player on position 0
+    GameBoard.theBoard[PlayerClass.char.position] = PlayerClass.char.name
+
+    # Place orcs in random positions
+    for orc in MonsterClass.army_of_orcs:
+        GameBoard.theBoard[orc.position] = orc.hidden
+
+    # Give player a wooden stick and a wooden shield
+    PlayerClass.char.equipped_items["Weapon"] = ItemClass.wooden_stick
+    PlayerClass.char.inventory[0] = ItemClass.wooden_shield
+
     print("\nWelcome to Monster_Hunter.\n\n"
           "Kill monsters, gather gold, upgrade your\n"
           "equipment and battle with the bosses.\n\n"
@@ -186,30 +157,6 @@ def main():
           "exit     Exit the game\n")
     menuAction()
 
-
-# --- Create the board --- #
-theBoard = [
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
-]
-
-# Place player on position 0
-theBoard[PlayerClass.char.position] = PlayerClass.char.name
-
-# Place orcs in random positions
-for orc in MonsterClass.army_of_orcs:
-    theBoard[orc.position] = orc.hidden
-
-# Create an item a sword and place it in player inventory
-PlayerClass.char.equipped_items["Weapon"] = ItemClass.wooden_stick
 
 if __name__ == '__main__':
     main()
