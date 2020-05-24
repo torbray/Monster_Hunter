@@ -1,20 +1,18 @@
 # Monster_Hunter Change Log
 
-Monster_Hunter Dev Change v1.0 
+**Monster_Hunter Dev Change v1.0** 
 
 * Added gold to the game
 * Added gold to inventory display
 * Changed inventory display
-* Created a separate file for the Player class
-* Ported Player class changes
-* Created a separate file for the Monster class
-* Ported Monster class changes
-* Created a separate file for the Item class
-* Ported Item class changes
+* Player class is now stored as a separate file
+* Monster class is now stored as a separate file
+* Item class is now stored as a separate file
 
-Monster_Hunter Dev Change v1.1
+**Monster_Hunter Dev Change v1.1**
 
-* Created a separate file for the game board
-* Ported game board changes
-* Moved some code to the main() function
+* Game board is now stored as a separate file
+* Main file code cleanup
+* Player is now able to view item stats given that they are either in the inventory, or equipped
+
 
