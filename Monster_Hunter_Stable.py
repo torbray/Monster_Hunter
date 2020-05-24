@@ -1,85 +1,10 @@
-import random
 import sys
-import combatsystem as cs
 
-
-class Player:
-    """
-        Player class defines the name, position and whether a player has found the monster.
-        The class also holds an inventory for a player.
-        There are two methods, one which adds an item to the inventory
-        and another which displays the content of the inventory
-    """
-
-    def __init__(self, name, position, hp, strength, defence):
-        self.name = name
-        self.position = position
-        self.hp = hp
-        self.strength = strength
-        self.defence = defence
-
-        self.inventory = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
-        self.equipped_items = {"Helmet": None,
-                               "Chest": None,
-                               "Weapon": None,
-                               "Shield": None
-                               }
-
-    def add_item(self, item):
-        self.inventory.append(item)
-
-    def show_inventory(self):
-        print("--Small Leather Bag--")
-        print("---------------------")
-        print(
-            f"| {self.inventory[0]} | {self.inventory[1]} | {self.inventory[2]} | {self.inventory[3]} | {self.inventory[4]} |")
-        print("---------------------")
-        print(
-            f"| {self.inventory[5]} | {self.inventory[6]} | {self.inventory[7]} | {self.inventory[8]} | {self.inventory[9]} |")
-        print("---------------------")
-        print("------Equipped-------")
-        print("---------------------")
-        print("       Helmet        \n")
-        print(f"       {self.equipped_items['Helmet']}")
-        print("---------------------")
-        print("       Armour        \n")
-        print(f"       {self.equipped_items['Chest']}")
-        print("---------------------")
-        print("       Weapon        \n")
-        print(f"       {self.equipped_items['Weapon']}")
-        print("---------------------")
-        print("       Shield        \n")
-        print(f"       {self.equipped_items['Shield']}")
-        print("---------------------")
-
-
-class Monster:
-    # The monster class defines a name, position and whether the monster is currently hidden on the board
-
-    def __init__(self, name, position, hidden, found, hp, attack, defence, defeated):
-        self.name = name
-        self.position = position
-        self.hidden = hidden
-        self.found = found
-        self.hp = hp
-        self.attack = attack
-        self.defence = defence
-        self.defeated = defeated
-
-
-class Item:
-    # The item class defines an item name, type, whether it is hidden on the board and its position
-
-    def __repr__(self):
-        return self.name
-
-    def __init__(self, name, i_type, hidden, position, attack, defence):
-        self.name = name
-        self.i_type = i_type
-        self.hidden = hidden
-        self.position = position
-        self.attack = attack
-        self.defence = defence
+# Game imports
+import CombatSystem
+import PlayerClass
+import MonsterClass
+import ItemClass
 
 
 def startGame():
@@ -125,7 +50,7 @@ def gameAction():
     from the current position.
     """
     game_action_dict = {
-        "help": printHelp, "exit": sys.exit, "inventory": player.show_inventory,
+        "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory,
         "up": 10, "down": -10, "left": -1, "right": 1
     }
     valid_move = False
@@ -197,13 +122,13 @@ def makeMove(move):
     """
 
     # Place the player in a new position
-    theBoard[player.position + move] = player.name
+    theBoard[PlayerClass.char.position + move] = PlayerClass.char.name
 
     # Reset the current position to empty
-    theBoard[player.position] = " "
+    theBoard[PlayerClass.char.position] = " "
 
     # Update player position to the new position
-    player.position = player.position + move
+    PlayerClass.char.position = PlayerClass.char.position + move
 
     checkEncounters()
     draw_board(theBoard)
@@ -213,27 +138,27 @@ def makeMove(move):
 def checkEncounters():
     # This function checks for any encounters on the board between the player/monster/item.
 
-    if player.position == a_sword.position:
-        if a_sword in player.inventory:
+    if PlayerClass.char.position == ItemClass.wooden_stick.position:
+        if ItemClass.wooden_stick in PlayerClass.char.inventory:
             pass
         else:
-            print(f"You found a {a_sword.i_type}!")
-            player.add_item(a_sword)
-            print(f"{a_sword.name} was added to your inventory.")
+            print(f"You found a {ItemClass.wooden_stick.i_type}!")
+            PlayerClass.char.add_item(ItemClass.wooden_stick)
+            print(f"{ItemClass.wooden_stick.name} was added to your inventory.")
 
-    for orc in army_of_orcs:
+    for orc in MonsterClass.army_of_orcs:
         if orc.defeated:
             pass
         else:
 
-            if orc.position == player.position:
+            if orc.position == PlayerClass.char.position:
                 print("\nYou found the monster!")
                 orc.found = True
 
                 fight_flee = input("\nDo you want to fight? [y/n] > ")
                 if fight_flee == "y":
                     theBoard[orc.position] = orc.name
-                    cs.battle(orc)
+                    CombatSystem.battle(orc)
 
                 elif fight_flee == "n":
                     pass
@@ -241,20 +166,20 @@ def checkEncounters():
                 else:
                     print("You're so scared that you run away.")
 
-    for orc in army_of_orcs:
+    for orc in MonsterClass.army_of_orcs:
         if orc.found:
             theBoard[orc.position] = orc.name
         if orc.defeated:
-            if player.position == orc.position:
-                theBoard[orc.position] = player.name
+            if PlayerClass.char.position == orc.position:
+                theBoard[orc.position] = PlayerClass.char.name
             else:
                 theBoard[orc.position] = " "
 
 
 def main():
-    print("\nWelcome to the game.\n"
-          "Your objective is to find a sword\n"
-          "and defeat the monster!\n\n"
+    print("\nWelcome to Monster_Hunter.\n\n"
+          "Kill monsters, gather gold, upgrade your\n"
+          "equipment and battle with the bosses.\n\n"
           "Available Commands:\n\n"
           "help     Display help menu\n"
           "start    Start the game\n"
@@ -276,27 +201,15 @@ theBoard = [
     " ", " ", " ", " ", " ", " ", " ", " ", " ", " "
 ]
 
-# Create a player and place on position 0
-player = Player("P", 0, 100, 3, 5)
-theBoard[player.position] = player.name
+# Place player on position 0
+theBoard[PlayerClass.char.position] = PlayerClass.char.name
 
-
-# Create monsters and place in a random position
-
-
-def gen_ran_pos():
-    random_monster_position = random.randrange(1, 99)
-    return random_monster_position
-
-
-army_of_orcs = [Monster("m", gen_ran_pos(), " ", False, 100, 2, 1, False) for _ in range(10)]
-
-for i in army_of_orcs:
-    theBoard[gen_ran_pos()] = i.hidden
+# Place orcs in random positions
+for orc in MonsterClass.army_of_orcs:
+    theBoard[orc.position] = orc.hidden
 
 # Create an item a sword and place it in player inventory
-a_sword = Item("Wooden stick", "Sword", " ", None, 5, 0)
-player.equipped_items["Weapon"] = a_sword
+PlayerClass.char.equipped_items["Weapon"] = ItemClass.wooden_stick
 
 if __name__ == '__main__':
     main()
