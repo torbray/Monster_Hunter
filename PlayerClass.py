@@ -47,4 +47,4 @@ class Player:
         print(f"Gold: {self.gold}")
 
 
-char = Player("P", 0, 100, 3, 5)
+char = Player("P", 0, 100, 3, 1)
