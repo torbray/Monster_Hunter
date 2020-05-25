@@ -7,13 +7,14 @@ class Item:
     def __repr__(self):
         return self.name
 
-    def __init__(self, name, i_type, hidden, position, damage, defence):
+    def __init__(self, name, i_type, hidden, position, damage, defence, value):
         self.name = name
         self.i_type = i_type
         self.hidden = hidden
         self.position = position
         self.damage = damage
         self.defence = defence
+        self.value = value
 
 
 def showStats():
@@ -25,18 +26,6 @@ def showStats():
 
     else:
         print("Invalid item.")
-
-
-
-# Create items
-wooden_stick = Item("Wooden Stick", "Weapon", " ", None, 5, 0)
-wooden_shield = Item("Wooden Shield", "Shield", " ", None, 0, 5)
-
-# Item statistics dictionary, hold names, damage and defence stats for an item
-item_stats = {
-    "wooden stick": [wooden_stick.name, wooden_stick.damage, wooden_stick.defence],
-    "wooden shield": [wooden_shield.name, wooden_shield.damage, wooden_shield.defence]
-}
 
 
 def equip():
@@ -64,3 +53,20 @@ def unequip():
         PlayerClass.char.inventory.append(i)
     else:
         print("Invalid item.")
+
+
+# Create normal items
+wooden_stick = Item("Wooden Stick", "Weapon", " ", None, 5, 0, 10)
+wooden_shield = Item("Wooden Shield", "Shield", " ", None, 0, 5, 10)
+iron_sword = Item("Iron Sword", "Weapon", " ", None, 25, 0, 120)
+
+# Create rare items
+
+# Create unique items
+
+# Item statistics dictionary, hold names, damage and defence stats for an item
+item_stats = {
+    "wooden stick": [wooden_stick.name, wooden_stick.damage, wooden_stick.defence],
+    "wooden shield": [wooden_shield.name, wooden_shield.damage, wooden_shield.defence],
+    "iron sword": [iron_sword.name, iron_sword.damage, iron_sword.defence]
+}
