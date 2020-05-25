@@ -52,6 +52,8 @@ The help command displays available menu and game commands:
     left         Move left
     right        Move right
 
+The board is a 10x10 grid with cells.
+
 P - Player
 m - Monster
 
@@ -82,7 +84,7 @@ m - Monster
     ----------------------------------------
     
 
-*This is the inventory display. Small Leather Bag holds unequipped items*
+This is the inventory display. "Small Leather Bag" holds unequipped items
 
     ---------------------
     
@@ -116,7 +118,7 @@ m - Monster
     ---------------------
     Gold: 0
 
-*The combat system looks like so*
+The combat system looks like so
 
     You found the monster!
 
@@ -126,14 +128,32 @@ m - Monster
 
     It's your turn to roll the dice...
 
-    You rolled 5
+    You rolled 8
 
-    You hit m for 7.5 damage... 92.5hp remaining
+    -------------------------------------------------
+    You hit m for 10.0 damage... m has 90.0hp remaining
+    -------------------------------------------------
 
     The monster rolled 10
 
-    You get hit for 2 damage... 98hp remaining
-      
+    -------------------------------------------------
+    You get hit for 10 damage... You have 90hp remaining
+    -------------------------------------------------
+
     roll/flee? >
+
+The player statistics
+
+    -----------------------
+    --Character Statistic--
+    -----------------------
+    Your base Health: 90
+    Your base Attack: 3
+    Your base Defence: 1
+    -----------------------
+    Your Total Health: 90
+    Your Total Strength: 8
+    Your Total Defence: 1
+    -----------------------
 
 # TBC
