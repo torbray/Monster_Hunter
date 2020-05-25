@@ -22,4 +22,4 @@ def gen_ran_pos():
 
 
 # Create 10 orcs on the board
-army_of_orcs = [Monster("m", gen_ran_pos(), " ", False, 100, 2, 1, False) for _ in range(10)]
+army_of_orcs = [Monster("m", gen_ran_pos(), " ", False, 100, 11, 2, False) for _ in range(10)]
