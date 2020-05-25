@@ -1,4 +1,3 @@
-# Monster_Hunter Development Ver 1.3
 import sys
 
 # Game imports
@@ -7,6 +6,7 @@ import CombatSystem
 import PlayerClass
 import MonsterClass
 import ItemClass
+import NPCClass
 
 
 def startGame():
@@ -56,7 +56,8 @@ def gameAction():
     from the current position.
     """
     game_action_dict = {
-        "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory, "item stats": ItemClass.showStats,
+        "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory,
+        "item stats": ItemClass.showStats,
         "equip": ItemClass.equip, "unequip": ItemClass.unequip, "player stats": PlayerClass.char.showStats,
         "up": 10, "down": -10, "left": -1, "right": 1
     }
@@ -101,6 +102,16 @@ def makeMove(move):
 def checkEncounters():
     # This function checks for any encounters on the board between the player/monster/item.
 
+    if PlayerClass.char.position == NPCClass.the_trader.position:
+        print("--------------------------------------")
+        print("\nYou found an NPC! The Mystical Trader.\n")
+        NPCClass.the_trader.hidden = NPCClass.the_trader.symbol
+        NPCClass.the_trader.found = True
+        NPCClass.tradeItem()
+
+    if NPCClass.the_trader.found:
+        GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.symbol
+
     if PlayerClass.char.position == ItemClass.wooden_stick.position:
         if ItemClass.wooden_stick in PlayerClass.char.inventory:
             pass
@@ -109,6 +120,7 @@ def checkEncounters():
             PlayerClass.char.add_item(ItemClass.wooden_stick)
             print(f"{ItemClass.wooden_stick.name} was added to your inventory.")
 
+    # For every orc in the army, if the orc pos is same as player pos, but not defeated, discover the monster
     for orc in MonsterClass.army_of_orcs:
         if orc.defeated:
             pass
@@ -116,11 +128,12 @@ def checkEncounters():
 
             if orc.position == PlayerClass.char.position:
                 print("\nYou found the monster!")
+                print(f"The {orc.name}")
                 orc.found = True
 
                 fight_flee = input("\nDo you want to fight? [y/n] > ")
                 if fight_flee == "y":
-                    GameBoard.theBoard[orc.position] = orc.name
+                    GameBoard.theBoard[orc.position] = orc.symbol
                     CombatSystem.battle(orc)
 
                 elif fight_flee == "n":
@@ -131,12 +144,30 @@ def checkEncounters():
 
     for orc in MonsterClass.army_of_orcs:
         if orc.found:
-            GameBoard.theBoard[orc.position] = orc.name
+            GameBoard.theBoard[orc.position] = orc.symbol
         if orc.defeated:
             if PlayerClass.char.position == orc.position:
                 GameBoard.theBoard[orc.position] = PlayerClass.char.name
             else:
                 GameBoard.theBoard[orc.position] = " "
+
+    if MonsterClass.orc_boss.defeated:
+        pass
+    else:
+        if MonsterClass.orc_boss.position == PlayerClass.char.position:
+            print("\nYou found the Destroyer Orc!")
+            print("Be careful, he's not like the other Orcs!")
+            MonsterClass.orc_boss.found = True
+
+            boss_fight = input("\nDo you want to fight the boss? [y/n] > ")
+            if boss_fight == "y":
+                GameBoard.theBoard[MonsterClass.orc_boss.position] = MonsterClass.orc_boss.symbol
+                CombatSystem.battle(MonsterClass.orc_boss)
+
+            elif boss_fight == "n":
+                pass
+            else:
+                print("You stutter something as you run away in fear...")
 
 
 def main():
@@ -146,6 +177,9 @@ def main():
     # Place orcs in random positions
     for orc in MonsterClass.army_of_orcs:
         GameBoard.theBoard[orc.position] = orc.hidden
+
+    # Place NPC
+    GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
 
     # Give player a wooden stick and a wooden shield
     PlayerClass.char.equipped_items["Weapon"] = ItemClass.wooden_stick
