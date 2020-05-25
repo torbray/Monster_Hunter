@@ -54,8 +54,8 @@ def gameAction():
     from the current position.
     """
     game_action_dict = {
-        "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory, "stats": ItemClass.showStats,
-        "equip": ItemClass.equip, "unequip": ItemClass.unequip,
+        "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory, "item stats": ItemClass.showStats,
+        "equip": ItemClass.equip, "unequip": ItemClass.unequip, "player stats": PlayerClass.char.showStats,
         "up": 10, "down": -10, "left": -1, "right": 1
     }
     valid_move = False
