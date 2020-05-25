@@ -133,6 +133,7 @@ m - Monster
     The monster rolled 10
 
     You get hit for 2 damage... 98hp remaining
+      
+    roll/flee? >
 
 # TBC
-    roll/flee? >
