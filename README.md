@@ -14,7 +14,7 @@ The player can move around the board in the search of monsters. Initially the mo
 
 If the player encounters a monster it can choose to fight or flee. If the player picks to fight, a choice between roll or flee appears. Flee is self explanatory, fight on the other hand starts the battle where the player and monster take turns in rolling the dice. Each time a dice is rolled, damage is calculated, dealt to the opposing party and the player is informed of how much hp the monster has left as well as how much hp the player has left. After each roll the player can flee or keep rolling until the monster or the player dies.
 
-There are items available in the game, Helmet, Armour, Shield and Weapon. Each item has unique statistics for Damage and Defence. Damage ~~and Defence~~ statistics are considered when dealing hits to enemies, the better the statistics of an item, the higher the hit damage. 
+There are items available in the game, Helmet, Armour, Shield and Weapon. Each item has unique statistics for Damage and Defence. Damage and Defence statistics are considered when dealing hits to enemies, the better the statistics of an item, the higher the hit damage. 
 
 The game starts with a menu:
 
