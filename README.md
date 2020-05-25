@@ -4,7 +4,8 @@ To start the game **_you will need Monster_Hunter.py (whichever version you want
     python Monster_Hunnter.py
           
 # Development Start
-The player starts with a basic weapon already equipped 
+The player starts with a basic weapon already equipped.
+
 For testing purposes time.sleep() has been commented out to speed up the process.
 
 # The Game
