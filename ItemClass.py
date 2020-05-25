@@ -19,15 +19,13 @@ class Item:
 def showStats():
     # Shows item statistics to the player
     item = input("Lookup item stats for: ").lower()
-    while True:
-        if item in item_stats:
-            if item in PlayerClass.char.equipped_items or item in PlayerClass.char.inventory:
-                print(f"\n{item_stats[item][0]}: Damage: {item_stats[item][1]} Defence: {item_stats[item][2]}")
-                break
+
+    if item in item_stats:
+        if item in PlayerClass.char.equipped_items or item in PlayerClass.char.inventory:
+            print(f"\n{item_stats[item][0]}: Damage: {item_stats[item][1]} Defence: {item_stats[item][2]}")
+
         else:
             print("Invalid item.")
-            break
-
 
 # Create items
 wooden_stick = Item("Wooden Stick", "Weapon", " ", None, 5, 0)
