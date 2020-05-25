@@ -22,14 +22,15 @@ def attack():
     print(f"You rolled {player_roll} \n")
     # time.sleep(2)
 
-    player_hit = pc.char.strength * pc.char.equipped_items["Weapon"].attack * dice_dict[player_roll]
+    player_hit = pc.char.strength * pc.char.equipped_items["Weapon"].damage * dice_dict[player_roll]
     return player_hit
 
 
 def deal_dmg(some_monster, player_hit):
     # The only purpose of this function is to deal damage to some_monster and to print the result.
     some_monster.hp -= player_hit
-    print(f"You hit {some_monster.name} for {player_hit} damage... {some_monster.hp}hp remaining \n")
+    print(f"You hit {some_monster.name} for {player_hit} damage... {some_monster.name}"
+          f" has {round(some_monster.hp, 2)}hp remaining \n")
     # time.sleep(4)
 
 
@@ -43,7 +44,7 @@ def monster_attack(monster):
 
     monster_hit = monster.attack * dice_dict[monster_roll]
     pc.char.hp = pc.char.hp - monster_hit
-    print(f"You get hit for {monster_hit} damage... {pc.char.hp}hp remaining\n")
+    print(f"You get hit for {monster_hit} damage... You have {round(pc.char.hp, 2)}hp remaining\n")
     # time.sleep(4)
 
 
