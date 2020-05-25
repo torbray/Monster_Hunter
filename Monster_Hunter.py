@@ -22,7 +22,7 @@ def printHelp():
           "\nAvailable Game Commands:\n"
           "help         Display help menu\n"
           "exit         Exit the game\n"
-          "stats        View stats of an item\n" 
+          "stats        View stats of an item\n"
           "equip        Allows to equip an item\n"
           "unequip      Allows to unequip an item\n"
           "inventory    Check your inventory\n\n"
@@ -82,15 +82,15 @@ def makeMove(move):
     Once the movements are complete, it updates the player object.player_position with the new pos. It then draws the
     board and loops back to take the gameAction() function to take the player input again.
     """
-
-    # Place the player in a new position
-    GameBoard.theBoard[PlayerClass.char.position + move] = PlayerClass.char.name
-
-    # Reset the current position to empty
-    GameBoard.theBoard[PlayerClass.char.position] = " "
-
-    # Update player position to the new position
-    PlayerClass.char.position = PlayerClass.char.position + move
+    try:
+        # Place the player in a new position
+        GameBoard.theBoard[PlayerClass.char.position + move] = PlayerClass.char.name
+        # Reset the current position to empty
+        GameBoard.theBoard[PlayerClass.char.position] = " "
+        # Update player position to the new position
+        PlayerClass.char.position = PlayerClass.char.position + move
+    except IndexError:
+        print("Out of bounds.")
 
     checkEncounters()
     GameBoard.draw_board(GameBoard.theBoard)
