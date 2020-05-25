@@ -28,3 +28,4 @@
 * Player is now able to check player statistics. Total statistic displays stats including equipped item bonuses. 
 * A Mystical Trader NCP added
 * Player can now buy or sell items.
+* Monsters will now drop a random amount of gold once defeated.
