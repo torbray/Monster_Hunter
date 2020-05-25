@@ -1,4 +1,3 @@
-# Monster_Hunter Development Version 1.2
 import sys
 
 # Game imports
@@ -126,7 +125,7 @@ def checkEncounters():
                     pass
 
                 else:
-                    print("You're so scared that you run away.")
+                    print("You stutter something as you run away in fear...")
 
     for orc in MonsterClass.army_of_orcs:
         if orc.found:
