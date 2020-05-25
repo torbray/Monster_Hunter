@@ -15,4 +15,7 @@
 * Main file code cleanup
 * Player is now able to view item stats given that they are either in the inventory, or equipped
 
+**Monster_Hunter Dev Change v1.2**
 
+* Player is now able to equip/unequip items in the inventory
+* Commands "equip", "unequip" added to the available game commands
