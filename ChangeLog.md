@@ -21,3 +21,8 @@
 * Commands "equip", "unequip" added to the available game commands
 * Bug fixes
 * Changed Combat System diplay to allow more clarity
+
+**Monster_Hunter Dev Change v1.3**
+
+* Added "player stats" as a game command
+* Player is now able to check player statistics. Total statistic displays stats including equipped item bonuses. 
