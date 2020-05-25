@@ -21,11 +21,12 @@ def showStats():
     item = input("Lookup item stats for: ").lower()
 
     if item in item_stats:
-        if item in PlayerClass.char.equipped_items or item in PlayerClass.char.inventory:
-            print(f"\n{item_stats[item][0]}: Damage: {item_stats[item][1]} Defence: {item_stats[item][2]}")
+        print(f"\n{item_stats[item][0]}: Damage: {item_stats[item][1]} Defence: {item_stats[item][2]}")
 
-        else:
-            print("Invalid item.")
+    else:
+        print("Invalid item.")
+
+
 
 # Create items
 wooden_stick = Item("Wooden Stick", "Weapon", " ", None, 5, 0)
@@ -42,7 +43,9 @@ def equip():
     # This function allows the user to equip items from inventory to the equipped items dict
     item = input("Which item to equip? ")
     for i in PlayerClass.char.inventory:
-        if item == i.name:
+        if item != i.name:
+            pass
+        elif item == i.name:
             type_of_item = i.i_type
             PlayerClass.char.equipped_items[type_of_item] = i
             print(f"\n{i.name} is now equipped")
