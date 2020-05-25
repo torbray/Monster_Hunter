@@ -90,4 +90,6 @@ def battle(monster):
 
         monster.defeated = True
         print("Monster defeated.")
+        PlayerClass.char.gold += monster.gold_loot
+        print(f"You pick up {monster.gold_loot} gold")
         fight = False
