@@ -1,5 +1,4 @@
-# Monster_Hunter Development Version 1.1
-
+# Monster_Hunter Development Version 1.2
 import sys
 
 # Game imports
@@ -55,6 +54,7 @@ def gameAction():
     """
     game_action_dict = {
         "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory, "stats": ItemClass.showStats,
+        "equip": ItemClass.equip, "unequip": ItemClass.unequip,
         "up": 10, "down": -10, "left": -1, "right": 1
     }
     valid_move = False
@@ -146,7 +146,7 @@ def main():
 
     # Give player a wooden stick and a wooden shield
     PlayerClass.char.equipped_items["Weapon"] = ItemClass.wooden_stick
-    PlayerClass.char.inventory[0] = ItemClass.wooden_shield
+    PlayerClass.char.inventory.append(ItemClass.wooden_shield)
 
     print("\nWelcome to Monster_Hunter.\n\n"
           "Kill monsters, gather gold, upgrade your\n"
