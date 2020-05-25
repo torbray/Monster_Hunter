@@ -19,3 +19,4 @@
 
 * Player is now able to equip/unequip items in the inventory
 * Commands "equip", "unequip" added to the available game commands
+* Bug fixes
