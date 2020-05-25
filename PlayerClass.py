@@ -13,7 +13,7 @@ class Player:
         self.strength = strength
         self.defence = defence
 
-        self.inventory = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+        self.inventory = []
         self.equipped_items = {"Helmet": None,
                                "Chest": None,
                                "Weapon": None,
@@ -28,25 +28,7 @@ class Player:
         print("---------------------")
         print("--Small Leather Bag--")
         print("---------------------")
-        print(f"| {self.inventory[0]} |")
-        print("---------------------")
-        print(f"| {self.inventory[1]} |")
-        print("---------------------")
-        print(f"| {self.inventory[2]} |")
-        print("---------------------")
-        print(f"| {self.inventory[3]} |")
-        print("---------------------")
-        print(f"| {self.inventory[4]} |")
-        print("---------------------")
-        print(f"| {self.inventory[5]} |")
-        print("---------------------")
-        print(f"| {self.inventory[6]} |")
-        print("---------------------")
-        print(f"| {self.inventory[7]} |")
-        print("---------------------")
-        print(f"| {self.inventory[8]} |")
-        print("---------------------")
-        print(f"| {self.inventory[9]} |")
+        print(f"{self.inventory}")
         print("---------------------")
         print("------Equipped-------")
         print("---------------------")
