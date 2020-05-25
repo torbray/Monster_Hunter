@@ -1,6 +1,6 @@
 import random
-import Monster_Hunter as mh
-import PlayerClass as pc
+import Monster_Hunter
+import PlayerClass
 import time
 import sys
 
@@ -22,15 +22,19 @@ def attack():
     print(f"You rolled {player_roll} \n")
     # time.sleep(2)
 
-    player_hit = pc.char.strength * pc.char.equipped_items["Weapon"].damage * dice_dict[player_roll]
+    # Hit damage calculation
+    player_hit = PlayerClass.char.strength * PlayerClass.char.equipped_items["Weapon"].damage * dice_dict[player_roll]
     return player_hit
 
 
 def deal_dmg(some_monster, player_hit):
-    # The only purpose of this function is to deal damage to some_monster and to print the result.
-    some_monster.hp -= player_hit
-    print(f"You hit {some_monster.name} for {player_hit} damage... {some_monster.name}"
-          f" has {round(some_monster.hp, 2)}hp remaining \n")
+    # The purpose of this function is to apply defensive bonus, deal damage to some_monster and to print the result.
+    reduced_hit = player_hit - some_monster.defence
+    some_monster.hp -= reduced_hit
+    print("-------------------------------------------------")
+    print(f"You hit {some_monster.name} for {round(reduced_hit, 2)} damage... {some_monster.name}"
+          f" has {round(some_monster.hp, 2)}hp remaining")
+    print("-------------------------------------------------")
     # time.sleep(4)
 
 
@@ -39,12 +43,16 @@ def monster_attack(monster):
     dice_dict = {1: 0.1, 2: 0.2, 3: 0.3, 4: 0.4, 5: 0.5, 6: 0.6, 7: 0.7, 8: 0.8, 9: 0.9, 10: 1}
 
     monster_roll = dice_roll()
-    print(f"The monster rolled {monster_roll} \n")
+    print(f"\nThe monster rolled {monster_roll} \n")
     # time.sleep(2)
 
     monster_hit = monster.attack * dice_dict[monster_roll]
-    pc.char.hp = pc.char.hp - monster_hit
-    print(f"You get hit for {monster_hit} damage... You have {round(pc.char.hp, 2)}hp remaining\n")
+    reduced_hit = monster_hit - PlayerClass.char.defence
+
+    PlayerClass.char.hp -= reduced_hit
+    print("-------------------------------------------------")
+    print(f"You get hit for {round(reduced_hit, 2)} damage... You have {round(PlayerClass.char.hp, 2)}hp remaining")
+    print("-------------------------------------------------")
     # time.sleep(4)
 
 
@@ -56,7 +64,7 @@ def battle(monster):
     fight = True
     while fight:
         while monster.hp > 0:
-            if pc.char.hp <= 0:
+            if PlayerClass.char.hp <= 0:
                 print("You're dead, game over.")
                 sys.exit()
             else:
@@ -72,7 +80,7 @@ def battle(monster):
                 elif action == "flee":
                     print("You run away like a coward!")
                     fight = False
-                    mh.gameAction()
+                    Monster_Hunter.gameAction()
 
                 elif action == "exit":
                     sys.exit()
