@@ -83,13 +83,21 @@ m - Monster
     
 
 *This is the inventory display. Small Leather Bag holds unequipped items*
+
     ---------------------
+    
     --Small Leather Bag--
+    
     ---------------------
+    
     [Wooden Shield]
+    
     ---------------------
+    
     ------Equipped-------
+    
     ---------------------
+    
            Helmet
 
            None
