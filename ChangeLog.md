@@ -29,3 +29,11 @@
 * A Mystical Trader NCP added
 * Player can now buy or sell items.
 * Monsters will now drop a random amount of gold once defeated.
+
+**Monster_Hunter Dev Change v1.4 (Implemented, but version yet to be uploaded to github)
+
+* Fixed player stats bug, where bonuses were not taken into account while in combat.
+* Added HP bonus to items. Items with the hp bonus, will now increase Players overall health
+* The Mystical Trader now has more items for sale.
+* The Mystical Trader will now display the stats for all items that he sells as well as the price.
+* Items can now be classified according to their rarirty: "Normal", "Rare", "Unique".
