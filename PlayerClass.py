@@ -44,45 +44,59 @@ class Player:
         print("       Shield        \n")
         print(f"       {self.equipped_items['Shield']}")
         print("---------------------")
-        print(f"Gold: {self.gold}")
+        print(f"Gold: {round(self.gold, 2)}")
 
     def showStats(self):
         print("-----------------------")
         print("--Character Statistic--")
         print("-----------------------")
-        print(f"Your base Health: {self.hp}")
         print(f"Your base Attack: {self.strength}")
-        print(f"Your base Defence: {self.defence}")
         print("-----------------------")
 
         # Calculate defence and damage stats from items
         shield = self.equipped_items['Shield']
         try:
             shield_def = shield.defence
+            shield_hp = shield.health
+            shield_dmg = shield.damage
         except AttributeError:
             shield_def = 0
+            shield_hp = 0
+            shield_dmg = 0
 
         helmet = self.equipped_items['Helmet']
         try:
             helmet_def = helmet.defence
+            helmet_hp = helmet.health
+            helmet_dmg = helmet.damage
         except AttributeError:
             helmet_def = 0
+            helmet_hp = 0
+            helmet_dmg = 0
 
         chest = self.equipped_items['Chest']
         try:
             chest_def = chest.defence
+            chest_hp = chest.health
+            chest_dmg = chest.damage
         except AttributeError:
             chest_def = 0
+            chest_hp = 0
+            chest_dmg = 0
 
         weapon = self.equipped_items['Weapon']
         try:
             weapon_dmg = weapon.damage
+            weapon_hp = weapon.health
+            weapon_def = weapon.defence
         except AttributeError:
             weapon_dmg = 0
+            weapon_hp = 0
+            weapon_def = 0
 
-        print(f"Your Total Health: {self.hp}")
-        print(f"Your Total Strength: {self.strength + weapon_dmg}")
-        print(f"Your Total Defence: {self.defence + shield_def + helmet_def + chest_def}")
+        print(f"Your Total Health: {round(self.hp, 2)}")
+        print(f"Your Total Attack: {self.strength + weapon_dmg + chest_dmg + helmet_dmg + shield_dmg}")
+        print(f"Your Total Defence: {self.defence}")
         print("-----------------------")
 
 
