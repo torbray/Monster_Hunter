@@ -1,4 +1,5 @@
-# Monster_Hunter Development Ver 1.3
+# Monster_Hunter Development Ver 1.4
+
 import sys
 
 # Game imports
@@ -113,6 +114,17 @@ def checkEncounters():
     if NPCClass.the_trader.found:
         GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.symbol
 
+    if PlayerClass.char.position == NPCClass.the_healer.position:
+        print("--------------------------------------")
+        print("\nYou found an NPC! The Healer.\n")
+        NPCClass.the_healer.hidden = NPCClass.the_healer.symbol
+        NPCClass.the_healer.found = True
+        NPCClass.healing()
+
+    if NPCClass.the_healer.found:
+        GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.symbol
+
+    '''
     if PlayerClass.char.position == ItemClass.wooden_stick.position:
         if ItemClass.wooden_stick in PlayerClass.char.inventory:
             pass
@@ -120,6 +132,7 @@ def checkEncounters():
             print(f"You found a {ItemClass.wooden_stick.i_type}!")
             PlayerClass.char.add_item(ItemClass.wooden_stick)
             print(f"{ItemClass.wooden_stick.name} was added to your inventory.")
+    '''
 
     # For every orc in the army, if the orc pos is same as player pos, but not defeated, discover the monster
     for orc in MonsterClass.army_of_orcs:
@@ -153,7 +166,8 @@ def checkEncounters():
                 GameBoard.theBoard[orc.position] = " "
 
     if MonsterClass.orc_boss.defeated:
-        pass
+        print("You killed the boss, you win!")
+        sys.exit()
     else:
         if MonsterClass.orc_boss.position == PlayerClass.char.position:
             print("\nYou found the Destroyer Orc!")
@@ -169,6 +183,8 @@ def checkEncounters():
                 pass
             else:
                 print("You stutter something as you run away in fear...")
+    if MonsterClass.orc_boss.found:
+        GameBoard.theBoard[MonsterClass.orc_boss.position] = MonsterClass.orc_boss.symbol
 
 
 def main():
@@ -179,6 +195,8 @@ def main():
     for orc in MonsterClass.army_of_orcs:
         GameBoard.theBoard[orc.position] = orc.hidden
 
+    GameBoard.theBoard[99] = MonsterClass.orc_boss.symbol
+
     # Place NPC
     GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
 
@@ -187,8 +205,8 @@ def main():
     PlayerClass.char.inventory.append(ItemClass.wooden_shield)
 
     print("\nWelcome to Monster_Hunter.\n\n"
-          "Kill monsters, gather gold, upgrade your\n"
-          "equipment and battle with the bosses.\n\n"
+          "Kill monsters, gather gold, buy better\n"
+          "equipment and battle with the boss.\n\n"
           "Available Commands:\n\n"
           "help     Display help menu\n"
           "start    Start the game\n"
