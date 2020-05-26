@@ -3,7 +3,7 @@ import Monster_Hunter
 import PlayerClass
 import time
 import sys
-
+import GameBoard
 
 def dice_roll():
     # Simple dice roll function
@@ -30,6 +30,8 @@ def attack():
 def deal_dmg(some_monster, player_hit):
     # The purpose of this function is to apply defensive bonus, deal damage to some_monster and to print the result.
     reduced_hit = player_hit - some_monster.defence
+    if reduced_hit <= 0:
+        reduced_hit = 0
     some_monster.hp -= reduced_hit
     print("-------------------------------------------------")
     print(f"You hit {some_monster.name} for {round(reduced_hit, 2)} damage... {some_monster.name}"
@@ -48,6 +50,8 @@ def monster_attack(monster):
 
     monster_hit = monster.attack * dice_dict[monster_roll]
     reduced_hit = monster_hit - PlayerClass.char.defence
+    if reduced_hit <= 0:
+        reduced_hit = 0
 
     PlayerClass.char.hp -= reduced_hit
     print("-------------------------------------------------")
@@ -78,6 +82,7 @@ def battle(monster):
                     monster_attack(monster)
 
                 elif action == "flee":
+                    GameBoard.draw_board(GameBoard.theBoard)
                     print("You run away like a coward!")
                     fight = False
                     Monster_Hunter.gameAction()
