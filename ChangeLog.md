@@ -36,4 +36,9 @@
 * Added HP bonus to items. Items with the hp bonus, will now increase Players overall health
 * The Mystical Trader now has more items for sale.
 * The Mystical Trader will now display the stats for all items that he sells as well as the price.
+* Added The Healer NPC: Will heal for a small price
 * Items can now be classified according to their rarirty: "Normal", "Rare", "Unique".
+* Added a boss to the map
+* First final objective introduced: Defeat the boss
+* The Mystical Trader sells more items
+* Minor bug fixes
