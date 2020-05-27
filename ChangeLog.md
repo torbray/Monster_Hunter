@@ -41,3 +41,11 @@
 * Added a boss to the map
 * First final objective introduced: Defeat the boss
 * Minor bug fixes
+* The Mystical Trader sells more items
+* Minor bug fixes
+
+**Monster_Hunter Dev Change v1.5 (Not yet on github)**
+
+* Simplified theBoard list
+* Added few normal items to be found around the board
+* Fixes item stats bug where looking up the Leather Armour breaks the game

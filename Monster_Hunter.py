@@ -9,6 +9,7 @@ import PlayerClass
 import MonsterClass
 import ItemClass
 import NPCClass
+from MonsterClass import gen_ran_pos
 
 
 def startGame():
@@ -124,15 +125,14 @@ def checkEncounters():
     if NPCClass.the_healer.found:
         GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.symbol
 
-    '''
-    if PlayerClass.char.position == ItemClass.wooden_stick.position:
-        if ItemClass.wooden_stick in PlayerClass.char.inventory:
+    if PlayerClass.char.position == ItemClass.leather_armour.position:
+        if ItemClass.leather_armour in PlayerClass.char.inventory:
             pass
         else:
-            print(f"You found a {ItemClass.wooden_stick.i_type}!")
-            PlayerClass.char.add_item(ItemClass.wooden_stick)
-            print(f"{ItemClass.wooden_stick.name} was added to your inventory.")
-    '''
+            print(f"You found something!")
+            PlayerClass.char.add_item(ItemClass.leather_armour)
+            print(f"{ItemClass.leather_armour.name} was added to your inventory.")
+
 
     # For every orc in the army, if the orc pos is same as player pos, but not defeated, discover the monster
     for orc in MonsterClass.army_of_orcs:
@@ -195,6 +195,7 @@ def main():
     for orc in MonsterClass.army_of_orcs:
         GameBoard.theBoard[orc.position] = orc.hidden
 
+    # Boss
     GameBoard.theBoard[99] = MonsterClass.orc_boss.symbol
 
     # Place NPC
@@ -203,6 +204,11 @@ def main():
     # Give player a wooden stick and a wooden shield
     PlayerClass.char.equipped_items["Weapon"] = ItemClass.wooden_stick
     PlayerClass.char.inventory.append(ItemClass.wooden_shield)
+
+    # Place some normal items around the board
+    GameBoard.theBoard[ItemClass.leather_armour.position] = ItemClass.leather_armour.hidden
+    GameBoard.theBoard[gen_ran_pos()] = ItemClass.leather_cap.hidden
+    GameBoard.theBoard[gen_ran_pos()] = ItemClass.iron_shield.hidden
 
     print("\nWelcome to Monster_Hunter.\n\n"
           "Kill monsters, gather gold, buy better\n"

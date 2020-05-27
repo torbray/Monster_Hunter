@@ -138,3 +138,4 @@ the_trader.inventory.append(ItemClass.dragon_plate)
 the_trader.inventory.append(ItemClass.half_moon_katana)
 
 the_trader.inventory.append(ItemClass.one_hit_wonder)
+
