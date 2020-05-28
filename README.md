@@ -4,8 +4,6 @@ To start the game **_you will need all the .py files the same directory._** Then
     python Monster_Hunnter.py
           
 # Development Start
-The player starts with a basic weapon already equipped.
-
 For testing purposes time.sleep() has been commented out to speed up the process.
 
 # The Game
