@@ -48,4 +48,5 @@
 
 * Simplified theBoard list
 * Added few normal items to be found around the board
-* Fixes item stats bug where looking up the Leather Armour breaks the game
+* Fixed item stats bug where looking up the Leather Armour breaks the game
+* When placing items on the board, each item needed a separate if statement in the Monster_Hunter.py checkEncounters function. This has been replaced with a single for loop that iterates over items in a new list -> on_board_items located in ItemClass.py. 

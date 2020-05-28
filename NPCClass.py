@@ -86,7 +86,8 @@ def tradeItem():
                 else:
                     print("\nI don't understand.")
             except AttributeError:
-                print("You can't sell it to me if you're wearing it...")
+
+                pass
 
 
 def healing():
