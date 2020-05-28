@@ -1,8 +1,6 @@
 def draw_board(board):
     """
     This function takes board as a parameter, which is a list of empty strings -> ' '. It holds 99 indices.
-    This function also checks whether the player encountered a monster and if he did, it changes the position of the
-    monster from hidden to monster_name.
     """
     line = '----------------------------------------'
     
