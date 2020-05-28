@@ -44,7 +44,7 @@
 * The Mystical Trader sells more items
 * Minor bug fixes
 
-**Monster_Hunter Dev Change v1.5 (Not yet on github)**
+**Monster_Hunter Dev Change v1.5**
 
 * Simplified theBoard list
 * Added few normal items to be found around the board
