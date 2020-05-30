@@ -20,8 +20,8 @@ The game starts with a menu:
 
     Welcome to Monster_Hunter.
 
-    Kill monsters, gather gold, upgrade your
-    equipment and battle with the bosses.
+    Kill monsters, gather gold, buy better
+    equipment and battle with the boss.
 
     Available Commands:
 
@@ -56,11 +56,14 @@ The board is a 10x10 grid with cells.
 
 P - Player
 m - Monster
+B - Boss
+T - Trader NPC
+H - Healer NPC
 
     ----------------------------------------
     ----------------------------------------
     ----------------------------------------
-       |   |   |   |   |   |   |   |   |   |
+       |   |   |   |   |   |   |   |   | B |
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
@@ -70,9 +73,9 @@ m - Monster
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
-       |   |   |   |   |   |   |   |   |   |
+       |   |   |   | H |   |   |   |   |   |
     ----------------------------------------
-       |   |   |   |   |   |   |   |   |   |
+       |   |   |   |   |   | T |   |   |   |
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
