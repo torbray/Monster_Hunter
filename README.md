@@ -1,15 +1,27 @@
-# Monster_Hunter
-__(See Development branch for most up-to-date version of the game.)__
 
-Text-based RPG played within the command terminal. 
+# Monster_Hunter - Master Branch(v1.6)
 
-This is a single-player text-based RPG, where the player can hunt monsters, gather loot, buy equipment and defeat the boss.
-
-To start the game simply open your favourite command terminal and navigate to the directory of the Monster_Hunter.py. Once in the correct directory use: (**Note: To start the game, you will need all of the .py files in the same folder.**)
+To start the game **_you will need all the .py files the same directory._** Then simply open your favourite command terminal and navigate to the directory of the Monster_Hunter.py. Once in the correct directory use:
 
     python Monster_Hunnter.py
+          
+# Development Start
+For testing purposes time.sleep() has been commented out to speed up the process.
 
-We start in the main menu of the game, which welcomes the player and defines the objective. It also displays available commands for the main menu.
+# The Game
+
+The player can move around the board in the search of monsters. Initially the monsters are invisble to the player, but once a monster is found, it will stay visible until killed.
+
+If the player encounters a monster it can choose to fight or flee. If the player picks to fight, a choice between roll or flee appears. Flee is self explanatory, fight on the other hand starts the battle where the player and monster take turns in rolling the dice. Each time a dice is rolled, damage is calculated, dealt to the opposing party and the player is informed of how much hp the monster has left as well as how much hp the player has left. After each roll the player can flee or keep rolling until the monster or the player dies.
+
+There are items available in the game, Helmet, Armour, Shield and Weapon. Each item has unique statistics for Damage and Defence. Damage and Defence statistics are considered when dealing hits to enemies, the better the statistics of an item, the higher the hit damage. 
+
+The game starts with a menu:
+
+    Welcome to Monster_Hunter.
+
+    Kill monsters, gather gold, buy better
+    equipment and battle with the boss.
 
     Available Commands:
 
@@ -19,35 +31,32 @@ We start in the main menu of the game, which welcomes the player and defines the
 
     What would you like to do? >
     
-# Help menu:
-
-The help command calls the printHelp() function and its only purpose is to print available menu commands, game commands and             player movement.
-
+The help command displays available menu and game commands:
+ 
     Available Menu Commands:
-          "help         Display help menu"
-          "start        Start the game"
-          "exit         Exit the game"
-          
-    Available Game Commands:"
-          "help         Display help menu"
-          "exit         Exit the game"
-          "item stats   View stats of an item"
-          "player stats View player statistics"
-          "equip        Allows to equip an item"
-          "unequip      Allows to unequip and item"
-          "inventory    Check your inventory"
-          "up           Move up"
-          "down         Move down"
-          "left         Move left"
-          "right        Move right"
+    help         Display help menu
+    start        Start the game
+    exit         Exit the game
 
-# The board:
 
-The player and the monsters are displayed on a 10x10 grid board. Until the player encounters the monster, it remains invisible on the board. This is the same for the NPCs with the Boss being an exception. The Boss is visible from the start.
+    Available Game Commands:
+    help         Display help menu
+    exit         Exit the game
+    stats        View stats of an item
+    equip        Allows to equip an item
+    unequip      Allows to unequip an item
+    inventory    Check your inventory
+
+    up           Move up
+    down         Move down
+    left         Move left
+    right        Move right
+
+The board is a 10x10 grid with cells.
 
 P - Player
+m - Monster
 B - Boss
-m - Minor monsters
 T - Trader NPC
 H - Healer NPC
 
@@ -58,26 +67,27 @@ H - Healer NPC
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
-     m |   |   |   |   |   |   |   |   |   |
+       |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
-       |   |   |   | T | m |   |   |   |   |
+       |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
-       |   |   | m |   |   |   |   |   |   |
+       |   |   |   | H |   |   |   |   |   |
     ----------------------------------------
-     m |   |   |   |   | m |   |   |   |   |
+       |   |   |   |   |   | T |   |   |   |
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
        |   | m |   |   |   |   |   |   |   |
     ----------------------------------------
-     P |   |   |   |   |   | H |   |   |   |
+     P |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
     ----------------------------------------
     ----------------------------------------
     
- This is the inventory display. "Small Leather Bag" holds unequipped items
+
+This is the inventory display. "Small Leather Bag" holds unequipped items
 
     ---------------------
     
@@ -140,12 +150,13 @@ The player statistics
     -----------------------
     --Character Statistic--
     -----------------------
+    Your base Health: 90
     Your base Attack: 3
+    Your base Defence: 1
     -----------------------
     Your Total Health: 90
     Your Total Strength: 8
     Your Total Defence: 1
     -----------------------
-    
-    
+
 # TBC

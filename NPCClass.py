@@ -86,7 +86,8 @@ def tradeItem():
                 else:
                     print("\nI don't understand.")
             except AttributeError:
-                print("You can't sell it to me if you're wearing it...")
+
+                pass
 
 
 def healing():
@@ -138,3 +139,4 @@ the_trader.inventory.append(ItemClass.dragon_plate)
 the_trader.inventory.append(ItemClass.half_moon_katana)
 
 the_trader.inventory.append(ItemClass.one_hit_wonder)
+

@@ -1,4 +1,5 @@
 import PlayerClass
+from MonsterClass import gen_ran_pos
 
 
 class Item:
@@ -7,7 +8,7 @@ class Item:
     def __repr__(self):
         return self.name
 
-    def __init__(self, name, i_type, hidden, position, damage, defence, health, value, rarity):
+    def __init__(self, name, i_type, hidden, position, damage, defence, health, value, rarity, found):
         self.name = name
         self.i_type = i_type
         self.hidden = hidden
@@ -17,6 +18,7 @@ class Item:
         self.health = health
         self.value = value
         self.rarity = rarity
+        self.found = found
 
 
 def showStats():
@@ -38,10 +40,7 @@ def equip():
         try:
             if item != i.name:
                 pass
-        except AttributeError:
-            pass
-        try:
-            if item == i.name:
+            elif item == i.name:
                 type_of_item = i.i_type
                 # Add item to inventory, before replacing in equipped
                 PlayerClass.char.inventory.append(PlayerClass.char.equipped_items[type_of_item])
@@ -53,8 +52,6 @@ def equip():
 
                 print(f"\n{i.name} is now equipped")
                 PlayerClass.char.inventory.remove(i)
-            elif item != i.name:
-                pass
         except AttributeError:
             pass
 
@@ -77,21 +74,21 @@ def unequip():
 
 
 # Create normal items
-wooden_stick = Item("Wooden Stick", "Weapon", " ", None, 5, 0, 0, 10, "Normal")
-wooden_shield = Item("Wooden Shield", "Shield", " ", None, 0, 5, 0, 10, "Normal")
-leather_cap = Item("Leather Cap", "Helmet", " ", None, 0, 7, 2, 17, "Normal")
-leather_armour = Item("Leather Armour", "Chest", " ", None, 0, 12, 2, 28, "Normal")
-iron_sword = Item("Iron Sword", "Weapon", " ", None, 25, 0, 0, 120, "Normal")
-iron_armour = Item("Iron Armour", "Chest", " ", None, 0, 27, 0, 62, "Normal")
-iron_shield = Item("Iron Shield", "Shield", " ", None, 0, 22, 0, 48, "Normal")
-iron_helmet = Item("Iron Helmet", "Helmet", " ", None, 0, 17, 0, 32, "Normal")
+wooden_stick = Item("Wooden Stick", "Weapon", " ", None, 5, 0, 0, 10, "Normal", False)
+wooden_shield = Item("Wooden Shield", "Shield", " ", None, 0, 5, 0, 10, "Normal", False)
+leather_cap = Item("Leather Cap", "Helmet", " ", gen_ran_pos(), 0, 7, 2, 17, "Normal", False)
+leather_armour = Item("Leather Armour", "Chest", " ", gen_ran_pos(), 0, 12, 2, 28, "Normal", False)
+iron_sword = Item("Iron Sword", "Weapon", " ", None, 25, 0, 0, 120, "Normal", False)
+iron_armour = Item("Iron Armour", "Chest", " ", None, 0, 27, 0, 62, "Normal", False)
+iron_shield = Item("Iron Shield", "Shield", " ", gen_ran_pos(), 0, 22, 0, 48, "Normal", False)
+iron_helmet = Item("Iron Helmet", "Helmet", " ", None, 0, 17, 0, 32, "Normal", False)
 
 # Create rare items
-dragon_plate = Item("Dragon Plate", "Chest", " ", None, 2, 55, 15, 260, "Rare")
-half_moon_katana = Item("Half Moon Katana", "Weapon", " ", None, 60, 3, 0, 280, "Rare")
+dragon_plate = Item("Dragon Plate", "Chest", " ", None, 2, 55, 15, 260, "Rare", False)
+half_moon_katana = Item("Half Moon Katana", "Weapon", " ", None, 60, 3, 0, 280, "Rare", False)
 
 # Create unique items
-one_hit_wonder = Item("One Hit Wonder", "Weapon", " ", None, 500, 0, 0, 5000, "Unique")
+one_hit_wonder = Item("One Hit Wonder", "Weapon", " ", None, 500, 0, 0, 5000, "Unique", False)
 
 # Item statistics dictionary, hold names, damage, defence and rarity stats for an item
 item_stats = {
@@ -110,5 +107,8 @@ item_stats = {
 
     "one hit wonder": [one_hit_wonder.name, one_hit_wonder.damage, one_hit_wonder.defence, one_hit_wonder.rarity]
 }
+
+on_board_items = [leather_cap, leather_armour]
+
 
 # Give player an item
