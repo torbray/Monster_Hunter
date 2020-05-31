@@ -30,18 +30,17 @@ class Player:
             print("You leveled up!")
             print("You can level up one of the following: Health/Strength/Defence")
             while levelup:
-                stat = input("Which will it be? > ")
-                if stat == "Health":
+                stat = input("Which will it be? > ").lower()
+                if stat == "health":
                     char.hp += 5
-                    levelup = False
-                elif stat == "Strength":
+                elif stat == "strength":
                     char.strength += 5
-                    levelup = False
-                elif stat == "Defence":
+                elif stat == "defence":
                     char.defence += 5
-                    levelup = False
                 else:
                     print("Please pick a valid statistic.")
+                    continue
+                levelup = False
 
         self.level = new_level
 
@@ -56,18 +55,10 @@ class Player:
         print("---------------------")
         print("------Equipped-------")
         print("---------------------")
-        print("       Helmet        \n")
-        print(f"       {self.equipped_items['Helmet']}")
-        print("---------------------")
-        print("       Armour        \n")
-        print(f"       {self.equipped_items['Chest']}")
-        print("---------------------")
-        print("       Weapon        \n")
-        print(f"       {self.equipped_items['Weapon']}")
-        print("---------------------")
-        print("       Shield        \n")
-        print(f"       {self.equipped_items['Shield']}")
-        print("---------------------")
+        for listed_item in self.equipped_items:
+            print(f'       {listed_item}\n')
+            print(f'       {self.equipped_items[listed_item]}')
+            print("---------------------")
         print(f"Gold: {round(self.gold, 2)}")
 
     def showStats(self):
