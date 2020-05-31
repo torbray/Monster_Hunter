@@ -19,7 +19,7 @@ class Npc:
 
 
 def tradeItem():
-    sell_buy = input("Would you like to [sell] or [buy]? else just [leave]! > ")
+    sell_buy = input("Would you like to [sell] or [buy]? else just [leave]! > ").lower()
 
     if sell_buy == "exit":
         sys.exit()
@@ -29,25 +29,7 @@ def tradeItem():
     elif sell_buy == "buy":
         print("\nExcellent! Here's what I have:\n")
         for attr in sorted(the_trader.inventory, key=lambda obj: obj.rarity):
-            if attr.rarity == "Normal":
-                print(f"{attr.name}:")
-                print("-------------")
-                print(f"Damage: {attr.damage} \n"
-                      f"Defence: {attr.defence} \n"
-                      f"HP: {attr.health} \n"
-                      f"Rarity: {attr.rarity} \n"
-                      f"Price: {attr.value}\n")
-
-            elif attr.rarity == "Rare":
-                print(f"{attr.name}:")
-                print("-------------")
-                print(f"Damage: {attr.damage} \n"
-                      f"Defence: {attr.defence} \n"
-                      f"HP: {attr.health} \n"
-                      f"Rarity: {attr.rarity} \n"
-                      f"Price: {attr.value}\n")
-
-            if attr.rarity == "Unique":
+            if attr.rarity in ["Normal", "Rare", "Unique"]:
                 print(f"{attr.name}:")
                 print("-------------")
                 print(f"Damage: {attr.damage} \n"
