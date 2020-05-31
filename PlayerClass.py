@@ -30,12 +30,12 @@ class Player:
             print("You leveled up!")
             print("You can level up one of the following: Health/Strength/Defence")
             while levelup:
-                stat = input("Which will it be? > ")
-                if stat == "Health":
+                stat = input("Which will it be? > ").lower()
+                if stat == "health":
                     char.hp += 5
-                elif stat == "Strength":
+                elif stat == "strength":
                     char.strength += 5
-                elif stat == "Defence":
+                elif stat == "defence":
                     char.defence += 5
                 else:
                     print("Please pick a valid statistic.")
