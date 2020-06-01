@@ -12,17 +12,11 @@ def checkEncounters():
 
     # --- Check NPC encounters --- #
     if PlayerClass.char.position == NPCClass.the_trader.position:
-        NPCClass.the_trader.found = True
-
-    if NPCClass.the_trader.found:
         GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.symbol
     else:
         GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
 
     if PlayerClass.char.position == NPCClass.the_healer.position:
-        NPCClass.the_healer.found = True
-
-    if NPCClass.the_healer.found:
         GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.symbol
     else:
         GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.hidden
@@ -33,13 +27,8 @@ def checkEncounters():
             if PlayerClass.char.position == i.position:
                 i.found = True
                 PlayerClass.char.add_item(i)
-        else:
-            pass
 
     # --- Check monster encounters --- #
-    for orc in MonsterClass.army_of_orcs:
-        if orc.defeated:
-            pass
     # If an orc is found, leave a symbol on the board
     for orc in MonsterClass.army_of_orcs:
         if orc.found:
@@ -51,13 +40,7 @@ def checkEncounters():
                 GameBoard.theBoard[orc.position] = " "
 
     # --- Check Boss encounter --- #
-    if MonsterClass.orc_boss.defeated:
-        pass
-    else:
-        if MonsterClass.orc_boss.position == PlayerClass.char.position:
-            MonsterClass.orc_boss.found = True
-
-    if MonsterClass.orc_boss.found:
+    if not MonsterClass.orc_boss.defeated and MonsterClass.orc_boss.position == PlayerClass.char.position:
         GameBoard.theBoard[MonsterClass.orc_boss.position] = MonsterClass.orc_boss.symbol
 
 
@@ -82,19 +65,12 @@ def makeSave():
         "trader_found": NPCClass.the_trader.found,
         "healer_pos": NPCClass.the_healer.position,
         "healer_found": NPCClass.the_healer.found,
-        # --- Monsters --- #
-        "monster1": MonsterClass.army_of_orcs[0],
-        "monster2": MonsterClass.army_of_orcs[1],
-        "monster3": MonsterClass.army_of_orcs[2],
-        "monster4": MonsterClass.army_of_orcs[3],
-        "monster5": MonsterClass.army_of_orcs[4],
-        "monster6": MonsterClass.army_of_orcs[5],
-        "monster7": MonsterClass.army_of_orcs[6],
-        "monster8": MonsterClass.army_of_orcs[7],
-        "monster9": MonsterClass.army_of_orcs[8],
         # --- Items --- #
         "board_items": ItemClass.on_board_items
     }
+    # --- Monsters (1 - 9) --- #
+    for i in range(0, 9):
+        save_dict[f'monster{i + 1}'] = army_of_orcs[i]
 
     pickle.dump(save_dict, open("save.p", "wb"))
 
@@ -145,21 +121,21 @@ def loadSave():
     new_monster1 = MonsterClass.Monster("Bald Orc", "m", monster1.position, " ", monster1.found, monster1.hp, 32, 2,
                                         monster1.defeated, MonsterClass.gen_orc_gold(), 49)
     new_monster2 = MonsterClass.Monster("Bald Orc", "m", monster2.position, " ", monster2.found, monster2.hp, 32, 2,
-                                        monster1.defeated, MonsterClass.gen_orc_gold(), 49)
+                                        monster2.defeated, MonsterClass.gen_orc_gold(), 49)
     new_monster3 = MonsterClass.Monster("Bald Orc", "m", monster3.position, " ", monster3.found, monster3.hp, 32, 2,
-                                        monster1.defeated, MonsterClass.gen_orc_gold(), 49)
+                                        monster3.defeated, MonsterClass.gen_orc_gold(), 49)
     new_monster4 = MonsterClass.Monster("Bald Orc", "m", monster4.position, " ", monster4.found, monster4.hp, 32, 2,
-                                        monster1.defeated, MonsterClass.gen_orc_gold(), 49)
+                                        monster4.defeated, MonsterClass.gen_orc_gold(), 49)
     new_monster5 = MonsterClass.Monster("Bald Orc", "m", monster5.position, " ", monster5.found, monster5.hp, 32, 2,
-                                        monster1.defeated, MonsterClass.gen_orc_gold(), 49)
+                                        monster5.defeated, MonsterClass.gen_orc_gold(), 49)
     new_monster6 = MonsterClass.Monster("Bald Orc", "m", monster6.position, " ", monster6.found, monster6.hp, 32, 2,
-                                        monster1.defeated, MonsterClass.gen_orc_gold(), 49)
+                                        monster6.defeated, MonsterClass.gen_orc_gold(), 49)
     new_monster7 = MonsterClass.Monster("Bald Orc", "m", monster7.position, " ", monster7.found, monster7.hp, 32, 2,
-                                        monster1.defeated, MonsterClass.gen_orc_gold(), 49)
-    new_monster8 = MonsterClass.Monster("Bald Orc", "m", monster8.position, " ", monster8.found, monster8.hp, 32, 2,
-                                        monster1.defeated, MonsterClass.gen_orc_gold(), 49)
+                                        monster7.defeated, MonsterClass.gen_orc_gold(), 49)
+    new_monster8 = MonsterClass.Monster("Bald 8c", "m", monster8.position, " ", monster8.found, monster8.hp, 32, 2,
+                                        monster8.defeated, MonsterClass.gen_orc_gold(), 49)
     new_monster9 = MonsterClass.Monster("Bald Orc", "m", monster9.position, " ", monster9.found, monster9.hp, 32, 2,
-                                        monster1.defeated, MonsterClass.gen_orc_gold(), 49)
+                                        monster9.defeated, MonsterClass.gen_orc_gold(), 49)
 
     MonsterClass.army_of_orcs.append(new_monster1)
     MonsterClass.army_of_orcs.append(new_monster2)
@@ -184,9 +160,7 @@ def loadSave():
     GameBoard.theBoard[ItemClass.leather_cap.position] = " "
     # If item is already found, pass, else add the item to on_board_items, replace on the board and make hidden
     for i in load_dict['board_items']:
-        if i.found:
-            pass
-        else:
+        if not i.found:
             ItemClass.on_board_items.append(i)
             GameBoard.theBoard[i.position] = i.hidden
 
