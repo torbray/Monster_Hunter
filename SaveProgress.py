@@ -108,44 +108,9 @@ def loadSave():
     MonsterClass.army_of_orcs = []
 
     # Separate all monsters
-    monster1 = load_dict['monster1']
-    monster2 = load_dict['monster2']
-    monster3 = load_dict['monster3']
-    monster4 = load_dict['monster4']
-    monster5 = load_dict['monster5']
-    monster6 = load_dict['monster6']
-    monster7 = load_dict['monster7']
-    monster8 = load_dict['monster8']
-    monster9 = load_dict['monster9']
-
-    new_monster1 = MonsterClass.Monster("Bald Orc", "m", monster1.position, " ", monster1.found, monster1.hp, 32, 2,
-                                        monster1.defeated, MonsterClass.gen_orc_gold(), 49)
-    new_monster2 = MonsterClass.Monster("Bald Orc", "m", monster2.position, " ", monster2.found, monster2.hp, 32, 2,
-                                        monster2.defeated, MonsterClass.gen_orc_gold(), 49)
-    new_monster3 = MonsterClass.Monster("Bald Orc", "m", monster3.position, " ", monster3.found, monster3.hp, 32, 2,
-                                        monster3.defeated, MonsterClass.gen_orc_gold(), 49)
-    new_monster4 = MonsterClass.Monster("Bald Orc", "m", monster4.position, " ", monster4.found, monster4.hp, 32, 2,
-                                        monster4.defeated, MonsterClass.gen_orc_gold(), 49)
-    new_monster5 = MonsterClass.Monster("Bald Orc", "m", monster5.position, " ", monster5.found, monster5.hp, 32, 2,
-                                        monster5.defeated, MonsterClass.gen_orc_gold(), 49)
-    new_monster6 = MonsterClass.Monster("Bald Orc", "m", monster6.position, " ", monster6.found, monster6.hp, 32, 2,
-                                        monster6.defeated, MonsterClass.gen_orc_gold(), 49)
-    new_monster7 = MonsterClass.Monster("Bald Orc", "m", monster7.position, " ", monster7.found, monster7.hp, 32, 2,
-                                        monster7.defeated, MonsterClass.gen_orc_gold(), 49)
-    new_monster8 = MonsterClass.Monster("Bald 8c", "m", monster8.position, " ", monster8.found, monster8.hp, 32, 2,
-                                        monster8.defeated, MonsterClass.gen_orc_gold(), 49)
-    new_monster9 = MonsterClass.Monster("Bald Orc", "m", monster9.position, " ", monster9.found, monster9.hp, 32, 2,
-                                        monster9.defeated, MonsterClass.gen_orc_gold(), 49)
-
-    MonsterClass.army_of_orcs.append(new_monster1)
-    MonsterClass.army_of_orcs.append(new_monster2)
-    MonsterClass.army_of_orcs.append(new_monster3)
-    MonsterClass.army_of_orcs.append(new_monster4)
-    MonsterClass.army_of_orcs.append(new_monster5)
-    MonsterClass.army_of_orcs.append(new_monster6)
-    MonsterClass.army_of_orcs.append(new_monster7)
-    MonsterClass.army_of_orcs.append(new_monster8)
-    MonsterClass.army_of_orcs.append(new_monster9)
+    for i in range(1, 10):
+    loaded = load_dict[f'monster{i}']
+    MonsterClass.army_of_orcs += [MonsterClass.Monster("Bald Orc", "m", loaded.position, " ", loaded.found, loaded.hp, 32, 2, loaded.defeated, MonsterClass.gen_orc_gold(), 49)]
 
     # Place saved monsters on the board
     for monster in MonsterClass.army_of_orcs:
