@@ -109,8 +109,8 @@ def loadSave():
 
     # Separate all monsters
     for i in range(1, 10):
-    loaded = load_dict[f'monster{i}']
-    MonsterClass.army_of_orcs += [MonsterClass.Monster("Bald Orc", "m", loaded.position, " ", loaded.found, loaded.hp, 32, 2, loaded.defeated, MonsterClass.gen_orc_gold(), 49)]
+        loaded = load_dict[f'monster{i}']
+        MonsterClass.army_of_orcs += [MonsterClass.Monster("Bald Orc", "m", loaded.position, " ", loaded.found, loaded.hp, 32, 2, loaded.defeated, MonsterClass.gen_orc_gold(), 49)]
 
     # Place saved monsters on the board
     for monster in MonsterClass.army_of_orcs:
