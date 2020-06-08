@@ -15,6 +15,9 @@ class Player:
         self.intelligence = intelligence
         self.magic = magic
 
+        self.race = ''
+        self.race_type = ''
+
         self.level = level
         self.xp = xp
 
@@ -53,26 +56,6 @@ class Player:
 
         self.level = new_level
 
-    def levelUp(self):
-        new_level = self.xp // 100
-        if new_level > self.level:
-            levelup = True
-            print("You leveled up!")
-            print("You can level up one of the following: Health/Strength/Defence")
-            while levelup:
-                stat = input("Which will it be? > ").lower()
-                if stat == "health":
-                    char.hp += 5
-                elif stat == "strength":
-                    char.strength += 5
-                elif stat == "defence":
-                    char.defence += 5
-                else:
-                    print("Please pick a valid statistic.")
-                    continue
-                levelup = False
-
-        self.level = new_level
 
     def add_item(self, item):
         self.inventory.append(item)
@@ -92,10 +75,6 @@ class Player:
         print(f"Gold: {round(self.gold, 2)}")
 
     def showStats(self):
-        print("-----------------------")
-        print("--Character Statistic--")
-        print("-----------------------")
-
         '''
         Only additional damage is calculated and added here. For other additional attributes like hp or defence
         look at ItemClass.py. Some of the below code is there for later. Might get rid of it, but it works for now.
@@ -140,20 +119,25 @@ class Player:
             weapon_hp = 0
             weapon_def = 0
 
-        print(f"Your Total Health:          {round(self.hp, 2)}")
-        print(f"Your Total Attack:          {self.strength + weapon_dmg + chest_dmg + helmet_dmg + shield_dmg}")
-        print(f"Your Total Defence:         {self.defence}")
-        print(f"Your Total Dexterity:       {self.dexterity}")
-        print(f"Your Total Intelligence:    {self.intelligence}")
-        print(f"Your Total Magic:           {self.magic}\n")
-        print(f"Level:                      {self.level}")
-        print(f"Current XP:                 {self.xp}")
-        print("-----------------------")
+        print(f"\nCharacter Card:\n"
+              f"-----------------------\n"
+              f"Health:                     {round(self.hp, 2):9.2f}\n"
+              f"Level:                      {self.level:9d}\n"
+              f"Current XP:                 {self.xp:9d}")
+        print(f"Name: {self.player:>31s}\n"
+              f"Race: {self.race:>31s}\n"
+              f"Type: {self.race_type:>31s}\n"
+              f"-----------------------\n"
+              f"Base/ Total Strength:       ({self.strength:3d}) {(self.strength + weapon_dmg + chest_dmg + helmet_dmg + shield_dmg):3d}\n"
+              f"Base/ Total Defence:        ({self.defence:3d}) {self.defence:3d}\n"
+              f"Base/ Total Dexterity:      ({self.dexterity:3d}) {self.dexterity:3d}\n"
+              f"Base/ Total Intelligence:   ({self.intelligence:3d}) {self.intelligence:3d}\n"
+              f"Base/ Total Magic:          ({self.magic:3d}) {self.magic:3d}\n"
+              f"-----------------------")
 
 
 def createCharacter():
     the_player = [0, 0, 0, 0, 0]
-    name = ""
     race = ""
     race_type = ""
 
@@ -161,11 +145,9 @@ def createCharacter():
     while creation:
         line = "------------------------"
 
-        print(line)
-        print(line)
+        print(line * 2)
         print("---Character Creation---")
-        print(line)
-        print(line)
+        print(line * 2)
         user_input = input("Type any key to continue... > ")
         if user_input == 'exit':
             sys.exit()
@@ -235,23 +217,20 @@ def createCharacter():
 
             correct_pick = False
             while not correct_pick:
-                race = input("And who might you be? [Human/Elf/Undead/Alien]: ").lower()
-                valid_picks = ['human', 'elf', 'undead', 'alien']
-                if race not in valid_picks:
-                    print("Invalid race choice. Try again.")
-                else:
-                    if race == 'human':
+                race = input("And who might you be? [Human/Elf/Undead/Alien]: ").lower().capitalize()
+                valid_picks = ['Human', 'Elf', 'Undead', 'Alien']
+                if race in valid_picks:
+                    if race == 'Human':
                         the_player = [5, 2, 3, 4, 0]
-                        correct_pick = True
-                    elif race == 'elf':
+                    elif race == 'Elf':
                         the_player = [1, 2, 4, 5, 2]
-                        correct_pick = True
-                    elif race == 'undead':
+                    elif race == 'Undead':
                         the_player = [3, 5, 1, 0, 5]
-                        correct_pick = True
-                    elif race == 'alien':
+                    elif race == 'Alien':
                         the_player = [1, 1, 1, 10, 1]
-                        correct_pick = True
+                    correct_pick = True
+                else:
+                    print("Invalid race choice. Try again.")
 
             print("\nWhat is your specialty?\n")
             print("Warrior:\n"
@@ -305,45 +284,28 @@ def createCharacter():
 
             correct_pick2 = False
             while not correct_pick2:
-                race_type = input("You are a [Warrior/Mage/Paladin/Thief]: ").lower()
-                valid_picks = ['warrior', 'mage', 'paladin', 'thief']
-                if race_type not in valid_picks:
-                    print("Invalid choice. Try again.")
-                else:
-                    if race_type == 'warrior':
+                race_type = input("You are a [Warrior/Mage/Paladin/Thief]: ").lower().capitalize()
+                valid_picks = ['Warrior', 'Mage', 'Paladin', 'Thief']
+                if race_type in valid_picks:
+                    if race_type == 'Warrior':
                         the_player[0] += 3
                         the_player[1] += 3
-                        correct_pick2 = True
-                    elif race_type == 'mage':
+                    elif race_type == 'Mage':
                         the_player[3] += 3
                         the_player[4] += 3
-                        correct_pick2 = True
-                    elif race_type == 'paladin':
+                    elif race_type == 'Paladin':
                         the_player[0] += 3
                         the_player[4] += 3
-                        correct_pick2 = True
-                    elif race_type == 'thief':
+                    elif race_type == 'Thief':
                         the_player[2] += 100
                         the_player[3] += 3
-                        correct_pick2 = True
-            print(line)
-            print(line)
-            print(line)
+                    correct_pick2 = True
+                else:
+                    print("Invalid choice. Try again.")
+            print(line * 3)
             print(f"\nAnd just like that, {name} was born.\n")
-            print(f"Your character card:\n"
-                  f"{line}")
-            print(f"Name: {name}\n"
-                  f"Race: {race}\n"
-                  f"Type: {race_type}\n"
-                  f"{line}\n"
-                  f"Strength:       {the_player[0]}\n"
-                  f"Defence:        {the_player[1]}\n"
-                  f"Dexterity:      {the_player[2]}\n"
-                  f"Intelligence:   {the_player[3]}\n"
-                  f"Magic:          {the_player[4]}\n"
-                  f"{line}")
 
-            return the_player, name
+            return the_player, name, race, race_type
 
 
 # name, player, position, hp, strength, defence, dexterity, intelligence, magic, level, xp

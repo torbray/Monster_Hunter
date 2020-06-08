@@ -13,14 +13,17 @@ from MonsterClass import gen_ran_pos
 
 
 def startGame():
-    # player_info is a tuple -> ([char stats], player_name)
-    player_info = PlayerClass.createCharacter()
-    PlayerClass.char.player = player_info[1]
-    PlayerClass.char.strength = player_info[0][0]
-    PlayerClass.char.defence = player_info[0][1]
-    PlayerClass.char.dexterity = player_info[0][2]
-    PlayerClass.char.intelligence = player_info[0][3]
-    PlayerClass.char.magic = player_info[0][4]
+    # player_info is [char stats], username is [player_name]
+    player_info, username, race, race_type = PlayerClass.createCharacter()
+    PlayerClass.char.player = username
+    PlayerClass.char.race = race
+    PlayerClass.char.race_type = race_type
+    PlayerClass.char.strength = player_info[0]
+    PlayerClass.char.defence = player_info[1]
+    PlayerClass.char.dexterity = player_info[2]
+    PlayerClass.char.intelligence = player_info[3]
+    PlayerClass.char.magic = player_info[4]
+    PlayerClass.char.showStats()
 
     GameBoard.draw_board(GameBoard.theBoard)
     gameAction()
@@ -41,10 +44,10 @@ def printHelp():
           "save         Saves the game\n"
           "load         Loads the save\n"
           "inventory    Check your inventory\n\n"
-          "up           Move up\n"
-          "down         Move down\n"
-          "left         Move left\n"
-          "right        Move right\n")
+          "up / n       Move up\n"
+          "down / s     Move down\n"
+          "left / w     Move left\n"
+          "right / e    Move right\n")
 
 
 def menuAction():
@@ -76,11 +79,11 @@ def gameAction():
         "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory,
         "item stats": ItemClass.showStats, "save": makeSave, "load": loadSave,
         "equip": ItemClass.equip, "unequip": ItemClass.unequip, "player stats": PlayerClass.char.showStats,
-        "up": 10, "down": -10, "left": -1, "right": 1
+        "up": 10, "n": 10, "down": -10, "s": -10, "left": -1, "w": -1, "right": 1, "e": 1
     }
     valid_move = False
     while not valid_move:
-        game_action = input("\n> ")
+        game_action = input("Type 'help' for help\n>> ")
         if game_action in game_action_dict:
             # Try calling a function, if the action is not a function, catch the exception and pass it to makeMove()
             try:
@@ -141,14 +144,10 @@ def checkEncounters():
                 print("You found something!")
                 PlayerClass.char.add_item(i)
                 print(f"{i.name} was added to your inventory")
-        else:
-            pass
 
     # For every orc in the army, if the orc pos is same as player pos, but not defeated, discover the monster
     for orc in MonsterClass.army_of_orcs:
-        if orc.defeated:
-            pass
-        else:
+        if not orc.defeated:
             if orc.position == PlayerClass.char.position:
                 print("\nYou found the monster!")
                 print(f"The {orc.name}")
