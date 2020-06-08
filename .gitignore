@@ -5,7 +5,11 @@
 .idea/modules.xml
 .idea/misc.xml
 .idea/inspectionProfiles/profiles_settings.xml
-__pycache__/PlayerClass.cpython-37.pyc
-__pycache__/NPCClass.cpython-37.pyc
-__pycache__/Monster_Hunter.cpython-37.pyc
+.idea/inspectionProfiles/Project_Default.xml
+__pycache__/CombatSystem.cpython-37.pyc
+__pycache__/GameBoard.cpython-37.pyc
 __pycache__/ItemClass.cpython-37.pyc
+__pycache__/Monster_Hunter.cpython-37.pyc
+__pycache__/MonsterClass.cpython-37.pyc
+__pycache__/NPCClass.cpython-37.pyc
+__pycache__/PlayerClass.cpython-37.pyc

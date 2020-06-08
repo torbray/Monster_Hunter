@@ -47,7 +47,8 @@ def printHelp():
           "up / n       Move up\n"
           "down / s     Move down\n"
           "left / w     Move left\n"
-          "right / e    Move right\n")
+          "right / e    Move right\n"
+          "use          Interact with your square\n")
 
 
 def menuAction():
@@ -79,7 +80,7 @@ def gameAction():
         "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory,
         "item stats": ItemClass.showStats, "save": makeSave, "load": loadSave,
         "equip": ItemClass.equip, "unequip": ItemClass.unequip, "player stats": PlayerClass.char.showStats,
-        "up": 10, "n": 10, "down": -10, "s": -10, "left": -1, "w": -1, "right": 1, "e": 1
+        "up": 10, "n": 10, "down": -10, "s": -10, "left": -1, "w": -1, "right": 1, "e": 1, "use": 0
     }
     valid_move = False
     while not valid_move:
@@ -147,21 +148,20 @@ def checkEncounters():
 
     # For every orc in the army, if the orc pos is same as player pos, but not defeated, discover the monster
     for orc in MonsterClass.army_of_orcs:
-        if not orc.defeated:
-            if orc.position == PlayerClass.char.position:
-                print("\nYou found the monster!")
-                print(f"The {orc.name}")
-                orc.found = True
+        if not orc.defeated and orc.position == PlayerClass.char.position:
+            print("\nYou found the monster!")
+            print(f"The {orc.name}")
+            orc.found = True
 
-                fight_flee = input("\nDo you want to fight? [y/n] > ")
-                if fight_flee == "y":
-                    GameBoard.theBoard[orc.position] = orc.symbol
-                    CombatSystem.battle(orc)
+            fight_flee = input("\nDo you want to fight? [y/n] > ")
+            if fight_flee == "y":
+                GameBoard.theBoard[orc.position] = orc.symbol
+                CombatSystem.battle(orc)
 
-                elif fight_flee == "n":
-                    pass
-                else:
-                    print("You stutter something as you run away in fear...")
+            elif fight_flee == "n":
+                pass
+            else:
+                print("You stutter something as you run away in fear...")
 
     # If an orc is found, leave a symbol on the board
     for orc in MonsterClass.army_of_orcs:
@@ -195,9 +195,7 @@ def checkEncounters():
         GameBoard.theBoard[MonsterClass.orc_boss.position] = MonsterClass.orc_boss.symbol
 
 def makeSave():
-    inventory_list = []
-    for obj in PlayerClass.char.inventory:
-        inventory_list.append(obj)
+    inventory_list = [obj for obj in PlayerClass.char.inventory]
 
     save_dict = {
         # --- Player --- #
@@ -213,6 +211,8 @@ def makeSave():
         "player_dex": PlayerClass.char.dexterity,
         "player_int": PlayerClass.char.intelligence,
         "player_mag": PlayerClass.char.magic,
+        "player_race": PlayerClass.char.race,
+        "player_type": PlayerClass.char.race_type,
         # --- NPC --- #
         "trader_pos": NPCClass.the_trader.position,
         "trader_found": NPCClass.the_trader.found,
@@ -256,6 +256,8 @@ def loadSave():
     PlayerClass.char.dexterity = load_dict['player_dex']
     PlayerClass.char.intelligence = load_dict['player_int']
     PlayerClass.char.magic = load_dict['player_mag']
+    PlayerClass.char.race = load_dict['player_race']
+    PlayerClass.char.race_type = load_dict['player_type']
 
     # --- NPC --- #
     # Set Found

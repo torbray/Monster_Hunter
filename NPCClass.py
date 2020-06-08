@@ -157,12 +157,12 @@ def upgradeItem():
     upgrading = True
 
     while upgrading:
-        item_choice = input("Which item would you like to upgrade? > ")
+        item_choice = input("Which item would you like to upgrade? > ").lower()
         if item_choice == "exit":
             upgrading = False
         for obj in PC.char.inventory:  # Looping through player inventory and inserting into a new table
             try:
-                if item_choice == obj.name:
+                if item_choice == obj.name.lower():
                     if obj.level >= 10:  # If the item is already at max return
                         print("Your item is already maxed out!")
                     else:
