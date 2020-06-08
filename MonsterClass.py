@@ -26,7 +26,7 @@ def gen_orc_gold():
 
 # Generate a random position for the monsters
 def gen_ran_pos():
-    random_monster_position = random.randrange(1, 99)
+    random_monster_position = random.randrange(2, 99)
     return random_monster_position
 
 
