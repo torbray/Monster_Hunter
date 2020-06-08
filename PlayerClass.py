@@ -297,7 +297,7 @@ def createCharacter():
                         the_player[0] += 3
                         the_player[4] += 3
                     elif race_type == 'Thief':
-                        the_player[2] += 100
+                        the_player[2] += 3
                         the_player[3] += 3
                     correct_pick2 = True
                 else:
