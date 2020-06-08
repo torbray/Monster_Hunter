@@ -1,5 +1,5 @@
 
-# Monster_Hunter - Master Branch(v1.7)
+# Monster_Hunter - Master Branch(v1.8.2)
 
 To start the game **_you will need all the .py files the same directory._** Then simply open your favourite command terminal and navigate to the directory of the Monster_Hunter.py. Once in the correct directory use:
 
@@ -32,6 +32,7 @@ The game starts with a menu:
     What would you like to do? >
     
 The help command displays available menu and game commands:
+
  
     Available Menu Commands:
     help         Display help menu
@@ -42,9 +43,12 @@ The help command displays available menu and game commands:
     Available Game Commands:
     help         Display help menu
     exit         Exit the game
-    stats        View stats of an item
+    item stats   View stats of an item
+    player stats View player statistics
     equip        Allows to equip an item
     unequip      Allows to unequip an item
+    save         Saves the game
+    load         Loads the save
     inventory    Check your inventory
 
     up           Move up
@@ -57,23 +61,22 @@ The board is a 10x10 grid with cells.
 P - Player
 m - Monster
 B - Boss
-T - Trader NPC
-H - Healer NPC
+H/T/W - NPC
 
     ----------------------------------------
     ----------------------------------------
     ----------------------------------------
        |   |   |   |   |   |   |   |   | B |
     ----------------------------------------
-       |   |   |   |   |   |   |   |   |   |
+       |   | W |   |   |   |   |   |   |   |
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
-       |   |   |   |   |   |   |   |   |   |
+       |   |   |   |   |   | H |   |   |   |
     ----------------------------------------
-       |   |   |   | H |   |   |   |   |   |
+       |   |   | T |   |   |   |   |   |   |
     ----------------------------------------
        |   |   |   |   |   | T |   |   |   |
     ----------------------------------------
