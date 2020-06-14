@@ -44,10 +44,10 @@ def printHelp():
           "save         Saves the game\n"
           "load         Loads the save\n"
           "inventory    Check your inventory\n\n"
-          "up / w       Move up\n"
+          "up / n       Move up\n"
           "down / s     Move down\n"
-          "left / a     Move left\n"
-          "right / d    Move right\n"
+          "left / w     Move left\n"
+          "right / e    Move right\n"
           "use          Interact with your square\n")
 
 
@@ -80,13 +80,10 @@ def gameAction():
         "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory,
         "item stats": ItemClass.showStats, "save": makeSave, "load": loadSave,
         "equip": ItemClass.equip, "unequip": ItemClass.unequip, "player stats": PlayerClass.char.showStats,
-        "up": (0, 10), "w": (0, 10),
-        "down": (0, -10), "s": (0, -10),
-        "left": (-1, 0), "a": (-1, 0),
-        "right": (1, 0), "d": (1, 0),
-        "use": (0, 0)
+        "up": 10, "n": 10, "down": -10, "s": -10, "left": -1, "w": -1, "right": 1, "e": 1, "use": 0
     }
-    while True:
+    valid_move = False
+    while not valid_move:
         game_action = input("Type 'help' for help\n>> ")
         if game_action in game_action_dict:
             # Try calling a function, if the action is not a function, catch the exception and pass it to makeMove()
