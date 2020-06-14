@@ -44,10 +44,10 @@ def printHelp():
           "save         Saves the game\n"
           "load         Loads the save\n"
           "inventory    Check your inventory\n\n"
-          "up / n       Move up\n"
+          "up / w       Move up\n"
           "down / s     Move down\n"
-          "left / w     Move left\n"
-          "right / e    Move right\n"
+          "left / a     Move left\n"
+          "right / d    Move right\n"
           "use          Interact with your square\n")
 
 
@@ -80,10 +80,13 @@ def gameAction():
         "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory,
         "item stats": ItemClass.showStats, "save": makeSave, "load": loadSave,
         "equip": ItemClass.equip, "unequip": ItemClass.unequip, "player stats": PlayerClass.char.showStats,
-        "up": 10, "n": 10, "down": -10, "s": -10, "left": -1, "w": -1, "right": 1, "e": 1, "use": 0
+        "up": (0, 10), "w": (0, 10),
+        "down": (0, -10), "s": (0, -10),
+        "left": (-1, 0), "a": (-1, 0),
+        "right": (1, 0), "d": (1, 0),
+        "use": (0, 0)
     }
-    valid_move = False
-    while not valid_move:
+    while True:
         game_action = input("Type 'help' for help\n>> ")
         if game_action in game_action_dict:
             # Try calling a function, if the action is not a function, catch the exception and pass it to makeMove()
@@ -91,33 +94,49 @@ def gameAction():
                 game_action_dict[game_action]()
             except TypeError:
                 makeMove(game_action_dict[game_action])
-                valid_move = True
         else:
             print("Unknown command...")
 
 
 def makeMove(move):
     """
+    move == (row, col)
+
     This function defines movement on the board. When a player makes a move, it first moves the player to the new
     position, because now there are two instances of the player on board, it erases the previous position with
     an empty string -> ' '.
 
-    Once the movements are complete, it updates the player object.player_position with the new pos. It then draws the
-    board and loops back to take the gameAction() function to take the player input again.
+    Once the movements are complete, it updates the player object.player_position with the new pos.
     """
-    try:
-        # Place the player in a new position
-        GameBoard.theBoard[PlayerClass.char.position + move] = PlayerClass.char.name
-        # Reset the current position to empty
-        GameBoard.theBoard[PlayerClass.char.position] = " "
-        # Update player position to the new position
-        PlayerClass.char.position = PlayerClass.char.position + move
-    except IndexError:
+    pos = PlayerClass.char.position
+    valid = False
+
+    ''' <torbray> Could be an any() function, but this is more readable  '''
+    if move[0] == 0:  # if move is a vertical move
+        if 0 <= pos + move[1] <= 99:
+            valid = True
+
+    elif move[1] == 0:  # if move is a horizontal move
+        row = (pos // 10) * 10
+        if row <= pos + move[0] <= row + 9:  # if position after move is between x0 and x9 e.g 40-49
+            valid = True
+
+    elif move[0] == move[1]:  # if move is zero movement
+        valid = True
+
+    if not valid:
         print("Out of bounds.")
+        return
+
+    # Place the player in a new position
+    GameBoard.theBoard[PlayerClass.char.position + move[0] + move[1]] = PlayerClass.char.name
+    # Reset the current position to empty
+    GameBoard.theBoard[PlayerClass.char.position] = " "
+    # Update player position to the new position
+    PlayerClass.char.position = PlayerClass.char.position + move[0] + move[1]
 
     checkEncounters()
     GameBoard.draw_board(GameBoard.theBoard)
-    gameAction()
 
 
 def npcEncounter():

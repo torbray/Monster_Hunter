@@ -32,29 +32,23 @@ class Player:
     def levelUp(self):
         new_level = self.xp // 100
         if new_level > self.level:
-            levelup = True
             print("You leveled up!")
             print("You can level up one of the following: Health/Strength/Defence/Dexterity/Intelligence/Magic")
             levels = {'health': 5, 'strength': 1, 'defence': 1, 'dexterity': 1, 'intelligence': 5, 'magic': 1}
-            while levelup:
+            while True:
                 stat = input("Which will it be? > ").lower()
-                if stat == "health":
-                    char.hp += levels[stat]
-                elif stat == "strength":
-                    char.strength += levels[stat]
-                elif stat == "defence":
-                    char.defence += levels[stat]
-                elif stat == "dexterity":
-                    char.dexterity += levels[stat]
-                elif stat == "intelligence":
-                    char.intelligence += levels[stat]
-                elif stat == "magic":
-                    char.magic += levels[stat]
+                if stat in levels:
+                    new_stats = [val if key == stat else 0 for key, val in levels.items()]
+                    char.hp += new_stats[0]
+                    char.strength += new_stats[1]
+                    char.defence += new_stats[2]
+                    char.dexterity += new_stats[3]
+                    char.intelligence += new_stats[4]
+                    char.magic += new_stats[5]
+                    break
                 else:
                     print("Please pick a valid statistic.")
-                    continue
-                levelup = False
-                print(f'Your {stat} has increased by {levels[stat]}!')
+            print(f'Your {stat} has increased by {levels[stat]}!')
 
         self.level = new_level
 
@@ -116,18 +110,18 @@ class Player:
         print(f"\nCharacter Card:\n"
               f"-----------------------\n"
               f"Health:                     {self.hp:9.2f}\n"
-              f"Level:                      {self.level:9d}\n"
-              f"Current XP:                 {self.xp:9d}\n"
-              f"Gold:                       {self.gold:9d}\n"
+              f"Level:                      {int(self.level):9d}\n"
+              f"Current XP:                 {int(self.xp):9d}\n"
+              f"Gold:                       {int(self.gold):9d}\n"
               f"Name: {self.player:>31s}\n"
               f"Race: {self.race:>31s}\n"
               f"Type: {self.race_type:>31s}\n"
               f"-----------------------\n"
-              f"Base/ Total Strength:       ({self.strength:3d}) {(self.strength + weapon_dmg + chest_dmg + helmet_dmg + shield_dmg):3d}\n"
-              f"Base/ Total Defence:        ({self.defence:3d}) {self.defence:3d}\n"
-              f"Base/ Total Dexterity:      ({self.dexterity:3d}) {self.dexterity:3d}\n"
-              f"Base/ Total Intelligence:   ({self.intelligence:3d}) {self.intelligence:3d}\n"
-              f"Base/ Total Magic:          ({self.magic:3d}) {self.magic:3d}\n"
+              f"Base/ Total Strength:       ({int(self.strength):3d}) {int(self.strength + weapon_dmg + chest_dmg + helmet_dmg + shield_dmg):3d}\n"
+              f"Base/ Total Defence:        ({int(self.defence):3d}) {int(self.defence):3d}\n"
+              f"Base/ Total Dexterity:      ({int(self.dexterity):3d}) {int(self.dexterity):3d}\n"
+              f"Base/ Total Intelligence:   ({int(self.intelligence):3d}) {int(self.intelligence):3d}\n"
+              f"Base/ Total Magic:          ({int(self.magic):3d}) {int(self.magic):3d}\n"
               f"-----------------------")
 
 
@@ -137,9 +131,9 @@ def createCharacter():
 
     line = "------------------------"
 
-    print(line * 2)
+    print(f'{line}\n{line}')
     print("---Character Creation---")
-    print(line * 2)
+    print(f'{line}\n{line}')
     user_input = input("Type any key to continue... > ")
     if user_input == 'exit':
         sys.exit()
@@ -162,7 +156,7 @@ def createCharacter():
               "Dexterity:       3\n"
               "Intelligence:    4\n"
               "Magic            0\n")
-        print(line * 4)
+        print(f'{line}\n{line}\n{line}\n{line}')
         input("Type any key to continue... > ")
         print("\nElf: \n"
               "An elf is a type of human-like supernatural being in Germanic mythology and folklore. In medieval \n"
@@ -177,7 +171,7 @@ def createCharacter():
               "Dexterity:       4\n"
               "Intelligence:    5\n"
               "Magic            2\n")
-        print(line * 4)
+        print(f'{line}\n{line}\n{line}\n{line}')
         input("Type any key to continue... > ")
 
         print("\nUndead: \n"
@@ -191,7 +185,7 @@ def createCharacter():
               "Dexterity:       1\n"
               "Intelligence:    0\n"
               "Magic            5\n")
-        print(line * 4)
+        print(f'{line}\n{line}\n{line}\n{line}')
         input("Type any key to continue... > ")
 
         print("\nAlien: \n"
@@ -207,7 +201,7 @@ def createCharacter():
               "Dexterity:       1\n"
               "Intelligence:    10\n"
               "Magic            1\n")
-        print(line * 4)
+        print(f'{line}\n{line}\n{line}\n{line}')
 
         correct_pick = False
         while not correct_pick:
@@ -238,7 +232,7 @@ def createCharacter():
               "Warrior specific stats: \n"
               "Strength +3\n"
               "Defence  +3\n")
-        print(line * 4)
+        print(f'{line}\n{line}\n{line}\n{line}')
         input("Type any key to continue... > ")
 
         print("\nMage: \n"
@@ -250,7 +244,7 @@ def createCharacter():
               "Mage specific stats: \n"
               "Intelligence + 3\n"
               "Magic        + 3\n")
-        print(line * 4)
+        print(f'{line}\n{line}\n{line}\n{line}')
         input("Type any key to continue... > ")
 
         print("\nPaladin: \n"
@@ -262,7 +256,7 @@ def createCharacter():
               "Paladin specific stats: \n"
               "Strength +3\n"
               "Magic    +3\n")
-        print(line * 4)
+        print(f'{line}\n{line}\n{line}\n{line}')
         input("Type any key to continue... > ")
 
         print("\nThief: \n"
@@ -296,7 +290,7 @@ def createCharacter():
                 correct_pick2 = True
             else:
                 print("Invalid choice. Try again.")
-        print(line * 3)
+        print(f'{line}\n{line}\n{line}')
         print(f"\nAnd just like that, {name} was born.\n")
 
         return the_player, name, race, race_type

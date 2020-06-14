@@ -23,43 +23,45 @@ def tradeItem():
 
     if sell_buy == "exit":
         sys.exit()
-    elif sell_buy == "leave":
-        pass
 
     elif sell_buy == "buy":
         print("\nExcellent! Here's what I have:\n")
 
-        for attr in sorted(the_trader.inventory, key=lambda obj: obj.rarity):
+        items, spells = [], []
+        for obj in the_trader.inventory:
+            try:
+                if obj.rarity in ["Normal", "Rare", "Unique"]:
+                    items.append(obj)
+            except AttributeError:
+                spells.append(obj)
 
-            if attr.rarity in ["Normal", "Rare", "Unique"]:
-                print(f"{attr.name}:")
-
-                print("-------------")
-
-                print(f"Damage: {attr.damage} \n"
-
-                      f"Defence: {attr.defence} \n"
-
-                      f"HP: {attr.health} \n"
-
-                      f"Rarity: {attr.rarity} \n"
-
-                      f"Price: {attr.value}\n")
+        for item in sorted(items, key=lambda obj: obj.rarity):
+            print(f"{item.name}:")
+            print("-------------")
+            print(f"Damage: {item.damage} \n"
+                  f"Defence: {item.defence} \n"
+                  f"HP: {item.health} \n"
+                  f"Rarity: {item.rarity} \n"
+                  f"Price: {item.value}\n")
+        for spell in spells:
+            print(f"{spell.name}:")
+            print("-------------")
+            print(f"INT Required: {spell.int_req} \n"
+                  f"Desc: {spell.description} \n"
+                  f"Price: {spell.value}\n")
 
         buy_item = input("Which item would you like to buy? > ")
-        for i in the_trader.inventory:
-            if i.name == buy_item:
-                if PC.char.gold >= i.value:
-                    PC.char.gold -= i.value
+        for i, item in enumerate(the_trader.inventory):
+            if item.name == buy_item:
+                if PC.char.gold >= item.value:
+                    PC.char.gold -= item.value
                     PC.char.inventory.append(i)
 
                     print("\nItem added to your inventory.")
                 else:
                     print("\nYou don't have enough gold for that item.")
 
-            elif i.name != buy_item:
-                pass
-            else:
+            elif i == len(the_trader.inventory) - 1:
                 print("\nI don't know what you're saying")
 
     elif sell_buy == "sell":
