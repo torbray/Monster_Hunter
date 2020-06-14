@@ -162,6 +162,7 @@ def createCharacter():
               "Dexterity:       3\n"
               "Intelligence:    4\n"
               "Magic            0\n")
+
         print(line * 4)
         input("Type any key to continue... > ")
         print("\nElf: \n"
@@ -177,7 +178,9 @@ def createCharacter():
               "Dexterity:       4\n"
               "Intelligence:    5\n"
               "Magic            2\n")
+
         print(line * 4)
+
         input("Type any key to continue... > ")
 
         print("\nUndead: \n"
@@ -191,7 +194,9 @@ def createCharacter():
               "Dexterity:       1\n"
               "Intelligence:    0\n"
               "Magic            5\n")
+
         print(line * 4)
+
         input("Type any key to continue... > ")
 
         print("\nAlien: \n"
@@ -207,8 +212,9 @@ def createCharacter():
               "Dexterity:       1\n"
               "Intelligence:    10\n"
               "Magic            1\n")
-        print(line * 4)
 
+        print(line * 4)
+        
         correct_pick = False
         while not correct_pick:
             race = input("And who might you be? [Human/Elf/Undead/Alien]: ").lower().capitalize()
@@ -238,7 +244,9 @@ def createCharacter():
               "Warrior specific stats: \n"
               "Strength +3\n"
               "Defence  +3\n")
+
         print(line * 4)
+
         input("Type any key to continue... > ")
 
         print("\nMage: \n"
@@ -250,7 +258,9 @@ def createCharacter():
               "Mage specific stats: \n"
               "Intelligence + 3\n"
               "Magic        + 3\n")
+
         print(line * 4)
+
         input("Type any key to continue... > ")
 
         print("\nPaladin: \n"
@@ -262,7 +272,9 @@ def createCharacter():
               "Paladin specific stats: \n"
               "Strength +3\n"
               "Magic    +3\n")
+
         print(line * 4)
+
         input("Type any key to continue... > ")
 
         print("\nThief: \n"
@@ -296,10 +308,12 @@ def createCharacter():
                 correct_pick2 = True
             else:
                 print("Invalid choice. Try again.")
+
         print(line * 3)
         print(f"\nAnd just like that, {name} was born.\n")
 
         return the_player, name, race, race_type
+
 
 # name, player, position, hp, strength, defence, dexterity, intelligence, magic, level, xp
 
