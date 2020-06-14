@@ -59,12 +59,10 @@ def showStats():
 
 def equip():
     # This function allows the user to equip items from inventory to the equipped items dict
-    item = input("Which item to equip? ")
+    item = input("Which item to equip? ").lower()
     for i in PlayerClass.char.inventory:
         try:
-            if item != i.name:
-                pass
-            elif item == i.name:
+            if item == i.name.lower():
                 type_of_item = i.i_type
                 # Add item to inventory, before replacing in equipped
                 PlayerClass.char.inventory.append(PlayerClass.char.equipped_items[type_of_item])
@@ -76,14 +74,15 @@ def equip():
 
                 print(f"\n{i.name} is now equipped")
                 PlayerClass.char.inventory.remove(i)
+                PlayerClass.char.inventory = [j for j in PlayerClass.char.inventory if j is not None]
         except AttributeError:
             pass
 
 
 def unequip():
     # This function acts as the opposite to the equip function.
-    item = input("Which item to unequip? Helmet/Chest/Weapon/Shield ")
-    if item in PlayerClass.char.equipped_items:
+    item = input("Which item to unequip? Helmet/Chest/Weapon/Shield ").lower()
+    if item in PlayerClass.char.equipped_items.lower():
         i = PlayerClass.char.equipped_items[item]
 
         # Adjust stats for character without item
