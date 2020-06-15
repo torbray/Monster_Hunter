@@ -193,13 +193,13 @@ def upgradeItem():
                 pass
 
 # Create an NPC
-the_trader = Npc("The Mystical Trader", "T", "Trader", gen_ran_pos(), " ", False)
+the_trader = Npc("The Mystical Trader", "⚖", "Trader", gen_ran_pos(), " ", False)
 the_trader.gold = 1000
-the_healer = Npc("The Healer", "H", "Healer", gen_ran_pos(), " ", False)
+the_healer = Npc("The Healer", "🧚‍", "Healer", gen_ran_pos(), " ", False)
 
-the_wizard = Npc("The Wizard", "W", "Wizard", gen_ran_pos(), " ", False)
+the_wizard = Npc("The Wizard", "🧙", "Wizard", gen_ran_pos(), " ", False)
 
-the_blacksmith = Npc("The Blacksmith", "S", "Blacksmith", 1, " ", False)
+the_blacksmith = Npc("The Blacksmith", "🔧", "Blacksmith", 1, " ", False)
 
 # Give items to an NPC
 # Normal

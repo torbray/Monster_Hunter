@@ -54,10 +54,16 @@ def monster_attack(monster):
     dice_dict = {1: 0.1, 2: 0.2, 3: 0.3, 4: 0.4, 5: 0.5, 6: 0.6, 7: 0.7, 8: 0.8, 9: 0.9, 10: 1}
 
     monster_roll = dice_roll()
+    monster_special_roll = dice_roll()
     print(f"\nThe monster rolled {monster_roll} \n")
+    if monster_roll >= 6:
+        if monster_special_roll >= 7:
+            print("The monster was able to use his special move!")
     # time.sleep(2)
-
-    monster_hit = monster.attack * dice_dict[monster_roll]
+    if monster_special_roll >= 6:
+        monster_hit = (monster.attack * dice_dict[monster_roll])+(monster.attack * dice_dict[monster_special_roll])
+    else:
+        monster_hit = monster.attack * dice_dict[monster_roll]
     reduced_hit = monster_hit - PlayerClass.char.defence
 
     # --- Decide whether it's a hit or miss (Dexterity) --- ###
@@ -66,10 +72,9 @@ def monster_attack(monster):
     if x >= chance_to_avoid:
         pass
     else:
+        print("You were able to avoid the attack!")
         reduced_hit = 0
 
-    if reduced_hit <= 0:
-        reduced_hit = 0
 
     PlayerClass.char.hp -= reduced_hit
     print("-------------------------------------------------")
