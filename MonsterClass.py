@@ -31,6 +31,6 @@ def gen_ran_pos():
 
 
 # Create 10 orcs on the board
-army_of_orcs = [Monster("Bald Orc", "m", gen_ran_pos(), " ", False, 100, 32, 2, False, gen_orc_gold(), 49) for _ in range(10)]
+army_of_orcs = [Monster("Bald Orc", "🧟‍", gen_ran_pos(), " ", False, 100, 32, 2, False, gen_orc_gold(), 49) for _ in range(10)]
 
 orc_boss = Monster("Destroyer Orc", "B", 99, "B", False, 500, 65, 10, False, 300, 100)

@@ -3,7 +3,7 @@
 
 To start the game **_you will need all the .py files the same directory._** Then simply open your favourite command terminal and navigate to the directory of the Monster_Hunter.py. Once in the correct directory use:
 
-    python Monster_Hunnter.py
+    python Monster_Hunter.py
           
 # Development Start
 For testing purposes time.sleep() has been commented out to speed up the process.
