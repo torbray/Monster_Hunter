@@ -209,8 +209,7 @@ the_blacksmith = Npc("The Blacksmith", "🔧", "Blacksmith", 1, " ", False)
 # Normal - leather_cap, leather_armour, iron_helmet, iron_shield, iron_armour, iron_sword
 # Rare - dragon_plate, half_moon_katana
 # Unique - one_hit_wonder
-for obj in ItemClass.Item.trader_items:
-    the_trader.inventory.append(obj)
+the_trader.inventory = ItemClass.Item.trader_items
 
 # Wizard/Spells
 the_wizard.inventory.append(ItemClass.fire_ball)
