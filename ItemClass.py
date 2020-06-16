@@ -4,12 +4,13 @@ from MonsterClass import gen_ran_pos
 
 class Item:
     # The item class defines an item name, type, whether it is hidden on the board and its position
+    trader_items = []
 
     def __repr__(self):
         return self.name
 
     def __init__(self, name, i_type, hidden, position, damage, defence, health, dexterity, intelligence, magic,
-                 value, rarity, found, level):
+                 value, rarity, found, level, npc=None):
 
         self.name = name
         self.i_type = i_type
@@ -28,6 +29,8 @@ class Item:
         self.rarity = rarity
         self.found = found
         self.level = level
+        if npc == 'trader':
+            Item.trader_items.append(self)
 
 
 class Spell:
@@ -65,7 +68,8 @@ def equip():
             if item == i.name.lower():
                 type_of_item = i.i_type
                 # Add item to inventory, before replacing in equipped
-                PlayerClass.char.inventory.append(PlayerClass.char.equipped_items[type_of_item])
+                if PlayerClass.char.equipped_items[type_of_item] is not None:
+                    PlayerClass.char.inventory.append(PlayerClass.char.equipped_items[type_of_item])
                 PlayerClass.char.equipped_items[type_of_item] = i
 
                 # Adjust player statistics
@@ -74,7 +78,6 @@ def equip():
 
                 print(f"\n{i.name} is now equipped")
                 PlayerClass.char.inventory.remove(i)
-                PlayerClass.char.inventory = [j for j in PlayerClass.char.inventory if j is not None]
         except AttributeError:
             pass
 
@@ -82,7 +85,7 @@ def equip():
 def unequip():
     # This function acts as the opposite to the equip function.
     item = input("Which item to unequip? Helmet/Chest/Weapon/Shield ").lower()
-    if item in PlayerClass.char.equipped_items.lower():
+    if item in ['helmet', 'chest', 'weapon', 'shield']:
         i = PlayerClass.char.equipped_items[item]
 
         # Adjust stats for character without item
@@ -93,26 +96,27 @@ def unequip():
         print(f"\n{i.name} is now unequipped")
         PlayerClass.char.inventory.append(i)
     else:
-        print("Invalid item.")
+        print("Please select one of the available options.")
 
 
-# name, i_type, hidden, position, damage, defence, health, dexterity, intelligence, magic, value, rarity, found
+# name, i_type, hidden, position, damage, defence, health, dexterity, intelligence, magic, value, rarity, found,
+# level, NPC
 # Create normal items
 wooden_stick = Item("Wooden Stick", "Weapon", " ", None, 5, 0, 0, 2, 0, 0, 10, "Normal", False, 0)
 wooden_shield = Item("Wooden Shield", "Shield", " ", None, 0, 5, 0, 2, 0, 0, 10, "Normal", False, 0)
-leather_cap = Item("Leather Cap", "Helmet", " ", gen_ran_pos(), 0, 7, 2, 0, 0, 0, 17, "Normal", False, 0)
-leather_armour = Item("Leather Armour", "Chest", " ", gen_ran_pos(), 0, 12, 2, 0, 0, 0, 28, "Normal", False, 0)
-iron_sword = Item("Iron Sword", "Weapon", " ", None, 25, 0, 0, -1, 0, 0, 120, "Normal", False, 0)
-iron_armour = Item("Iron Armour", "Chest", " ", None, 0, 27, 0, -3, 0, 0, 62, "Normal", False, 0)
-iron_shield = Item("Iron Shield", "Shield", " ", None, 0, 22, 0, -2, 0, 0, 48, "Normal", False, 0)
-iron_helmet = Item("Iron Helmet", "Helmet", " ", None, 0, 17, 0, -1, 0, 0, 32, "Normal", False, 0)
+leather_cap = Item("Leather Cap", "Helmet", " ", gen_ran_pos(), 0, 7, 2, 0, 0, 0, 17, "Normal", False, 0, 'trader')
+leather_armour = Item("Leather Armour", "Chest", " ", gen_ran_pos(), 0, 12, 2, 0, 0, 0, 28, "Normal", False, 0, 'trader')
+iron_sword = Item("Iron Sword", "Weapon", " ", None, 25, 0, 0, -1, 0, 0, 120, "Normal", False, 0, 'trader')
+iron_armour = Item("Iron Armour", "Chest", " ", None, 0, 27, 0, -3, 0, 0, 62, "Normal", False, 0, 'trader')
+iron_shield = Item("Iron Shield", "Shield", " ", None, 0, 22, 0, -2, 0, 0, 48, "Normal", False, 0, 'trader')
+iron_helmet = Item("Iron Helmet", "Helmet", " ", None, 0, 17, 0, -1, 0, 0, 32, "Normal", False, 0, 'trader')
 
 # Create rare items
-dragon_plate = Item("Dragon Plate", "Chest", " ", None, 2, 55, 15, -3, 5, 10, 260, "Rare", False, 0)
-half_moon_katana = Item("Half Moon Katana", "Weapon", " ", None, 60, 3, 0, 6, 6, 6, 280, "Rare", False, 0)
+dragon_plate = Item("Dragon Plate", "Chest", " ", None, 2, 55, 15, -3, 5, 10, 260, "Rare", False, 0, 'trader')
+half_moon_katana = Item("Half Moon Katana", "Weapon", " ", None, 60, 3, 0, 6, 6, 6, 280, "Rare", False, 0, 'trader')
 
 # Create unique items
-one_hit_wonder = Item("One Hit Wonder", "Weapon", " ", None, 500, 0, 0, 0, 10, 10, 5000, "Unique", False, 0)
+one_hit_wonder = Item("One Hit Wonder", "Weapon", " ", None, 500, 0, 0, 0, 10, 10, 5000, "Unique", False, 0, 'trader')
 
 # Item statistics dictionary, hold names, damage, defence and rarity stats for an item
 item_stats = {
@@ -213,10 +217,7 @@ on_board_items = [leather_cap, leather_armour]
 def s_fire_ball(monster):
     # Cast a fireball that deals 60 base damage
 
-    reduced_hit = (PlayerClass.char.magic + 60) - monster.defence
-    if reduced_hit <= 0:
-        # This prevents the damage from going negative
-        reduced_hit = 0
+    reduced_hit = max((PlayerClass.char.magic + 60) - monster.defence, 0)
     monster.hp -= reduced_hit
     print("\nYou cast a spell...")
     print("\n-------------------------------------------------")

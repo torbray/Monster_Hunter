@@ -49,37 +49,40 @@ def tradeItem():
             print(f"INT Required: {spell.int_req} \n"
                   f"Desc: {spell.description} \n"
                   f"Price: {spell.value}\n")
+        print(f'Player Gold: {PC.char.gold}')
 
-        buy_item = input("Which item would you like to buy? > ")
+        buy_item = input("Which item would you like to buy? > ").lower()
         for i, item in enumerate(the_trader.inventory):
-            if item.name == buy_item:
+            if item.name.lower() == buy_item:
                 if PC.char.gold >= item.value:
                     PC.char.gold -= item.value
-                    PC.char.inventory.append(i)
-
+                    PC.char.inventory.append(item)
                     print("\nItem added to your inventory.")
                 else:
                     print("\nYou don't have enough gold for that item.")
-
+                break
             elif i == len(the_trader.inventory) - 1:
                 print("\nI don't know what you're saying")
 
     elif sell_buy == "sell":
-        sell_item = input("\nWhat is it that you would like to sell? > ")
-        for i in PC.char.inventory:
-            try:
-                if i.name == sell_item:
-                    the_trader.inventory.append(i)
-                    PC.char.inventory.remove(i)
-                    PC.char.gold += i.value
-                    print("Pleasure to do business with you.")
-                    print(f"{i.value} gold added to your sack")
-                elif i.name != sell_item:
+        if len(PC.char.inventory) == 0:
+            print("You don't have any items in your inventory")
+        else:
+            print(f'Inventory: {PC.char.inventory}')
+            sell_item = input("\nWhat is it that you would like to sell? > ").lower()
+            for index, obj in enumerate(PC.char.inventory, start=1):
+                try:
+                    if obj.name.lower() == sell_item:
+                        the_trader.inventory.append(obj)
+                        PC.char.inventory.remove(obj)
+                        PC.char.gold += obj.value
+                        print("Pleasure to do business with you.")
+                        print(f"{obj.value} gold added to your sack")
+                        break
+                except AttributeError:
+                    pass
+                if index == len(PC.char.inventory):
                     print("\nYou don't have that item in your backpack.")
-                else:
-                    print("\nI don't understand.")
-            except AttributeError:
-                pass
 
 
 def healing():
@@ -192,6 +195,7 @@ def upgradeItem():
             except AttributeError:
                 pass
 
+
 # Create an NPC
 the_trader = Npc("The Mystical Trader", "⚖", "Trader", gen_ran_pos(), " ", False)
 the_trader.gold = 1000
@@ -202,18 +206,11 @@ the_wizard = Npc("The Wizard", "🧙", "Wizard", gen_ran_pos(), " ", False)
 the_blacksmith = Npc("The Blacksmith", "🔧", "Blacksmith", 1, " ", False)
 
 # Give items to an NPC
-# Normal
-the_trader.inventory.append(ItemClass.leather_cap)
-the_trader.inventory.append(ItemClass.leather_armour)
-the_trader.inventory.append(ItemClass.iron_helmet)
-the_trader.inventory.append(ItemClass.iron_shield)
-the_trader.inventory.append(ItemClass.iron_armour)
-the_trader.inventory.append(ItemClass.iron_sword)
-# Rare
-the_trader.inventory.append(ItemClass.dragon_plate)
-the_trader.inventory.append(ItemClass.half_moon_katana)
-# Unique
-the_trader.inventory.append(ItemClass.one_hit_wonder)
+# Normal - leather_cap, leather_armour, iron_helmet, iron_shield, iron_armour, iron_sword
+# Rare - dragon_plate, half_moon_katana
+# Unique - one_hit_wonder
+for obj in ItemClass.Item.trader_items:
+    the_trader.inventory.append(obj)
 
 # Wizard/Spells
 the_wizard.inventory.append(ItemClass.fire_ball)
