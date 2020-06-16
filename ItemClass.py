@@ -84,8 +84,8 @@ def equip():
 
 def unequip():
     # This function acts as the opposite to the equip function.
-    item = input("Which item to unequip? Helmet/Chest/Weapon/Shield ").lower()
-    if item in ['helmet', 'chest', 'weapon', 'shield']:
+    item = input("Which item to unequip? Helmet/Chest/Weapon/Shield ").lower().capitalize()
+    if item in ['Helmet', 'Chest', 'Weapon', 'Shield']:
         i = PlayerClass.char.equipped_items[item]
 
         # Adjust stats for character without item
